@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(FactoryModelLibrary LANGUAGES CXX)
+project(ServerLibrary LANGUAGES CXX)
 
 
 add_library(lib STATIC 
-    lib.cpp 
+    server.cpp 
 )

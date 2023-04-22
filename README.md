@@ -1,1 +1,1 @@
-# C/C++ template
+# C++ server
