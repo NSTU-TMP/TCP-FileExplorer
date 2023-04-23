@@ -2,23 +2,26 @@
 
 #include <stdexcept>
 
-tcp_listener::tcp_listener(uint16_t port, uint32_t address) {
-  this->server_fd = socket(AF_INET, SOCK_STREAM, 0);
-  if (server_fd == -1) {
-    throw std::runtime_error(
-        "Ошибка инициализации сокета\nхорошо бы сделать "
-        "свою ошибку\n");
-  }
-  //   std::memset(&(this->address), 0, sizeof(this->address));
-  this->address.sin_family = AF_INET;
-  this->address.sin_addr.s_addr = address;
-  this->address.sin_port = htons(port);
+// чето надо с этим сделать
+void create_client_stream(uint16_t client_port, uint32_t server_address,
+                          int &client_fd_send_requests) {}
 
-  // если будут проблемы чекни тут на всякий))
-  if (bind(server_fd, (struct sockaddr*)&(this->address),
-           sizeof(this->address)) == -1) {
-    throw std::runtime_error(
-        "Ошибка привязки сокета к адресу сервера\nхорошо бы сделать "
-        "свою ошибку\n");
+tcp_listener::tcp_listener(int server_fd, sockaddr_in address) {
+  this->server_fd = server_fd;
+  this->address = address;
+}
+
+void tcp_listener::accept_client() {
+  int client_fd_get_requests = accept(this->server_fd, NULL, NULL);
+  int client_fd_send_requests;
+
+  //   this->address.sin_addr;
+  this->address.sin_addr.s_addr;
+  uint16_t client_port = 0;  // !!!!!
+
+  //   std::string message = "Hello, client!";
+  if (send(client_fd_get_requests, &client_port, sizeof(client_port), 0) ==
+      -1) {
+    std::cerr << "Failed to send message to client" << std::endl;
   }
 }

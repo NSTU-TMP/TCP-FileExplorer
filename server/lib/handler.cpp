@@ -36,10 +36,10 @@ void handler::operator()(int client_fd) {
   //             << std::string(buffer, bytes_received) << std::endl;
 
   //   // отправляем ответ клиенту
-  //   std::string message = "Hello, client!";
-  //   if (send(client_fd, message.c_str(), message.size(), 0) == -1) {
-  //     std::cerr << "Failed to send message to client" << std::endl;
-  //   }
+  // std::string message = "Hello, client!";
+  // if (send(client_fd, message.c_str(), message.size(), 0) == -1) {
+  //   std::cerr << "Failed to send message to client" << std::endl;
+  // }
   // }
 
   // close(client_fd);

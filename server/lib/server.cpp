@@ -6,7 +6,7 @@ server::server(uint16_t port, uint32_t address, int max_connections_count) {
   this->max_connections_count = max_connections_count;
 
   this->server_fd = socket(AF_INET, SOCK_STREAM, 0);
-  if (server_fd == -1) {
+  if (this->server_fd == -1) {
     std::cerr << "Failed to create socket\n";
     throw std::runtime_error(
         "Ошибка инициализации сокета\nхорошо бы сделать "
@@ -18,7 +18,7 @@ server::server(uint16_t port, uint32_t address, int max_connections_count) {
   this->address.sin_port = htons(port);
 
   // если будут проблемы чекни тут на всякий))
-  if (bind(server_fd, (struct sockaddr*)&(this->address),
+  if (bind(this->server_fd, (struct sockaddr*)&(this->address),
            sizeof(this->address)) == -1) {
     std::cerr << "Failed to bind socket to address\n";
     throw std::runtime_error(
