@@ -34,7 +34,9 @@ namespace Client.ViewModels
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
                 if (_client != null && _client.isConnected && string.IsNullOrEmpty(_path)) messageFromServer = _client.SendMessageToServer(_path);
-                else messageFromServer = "Подключение с сервером ещё не установлено.";
+                else if (_client == null)
+                    messageFromServer = "Подключение с сервером ещё не установлено.";
+                else messageFromServer = "Не выбран путь.";
             });
         }
     }
