@@ -26,7 +26,7 @@
 /home/darling/.nuget/packages/avalonia/0.10.18/lib/netcoreapp2.0/Avalonia.Visuals.dll
 /home/darling/.nuget/packages/avalonia.win32/0.10.18/lib/netstandard2.0/Avalonia.Win32.dll
 /home/darling/.nuget/packages/avalonia.x11/0.10.18/lib/netstandard2.0/Avalonia.X11.dll
-/home/darling/.nuget/packages/dynamicdata/7.1.1/lib/net5.0/DynamicData.dll
+/home/darling/.nuget/packages/dynamicdata/7.13.5/lib/net6.0/DynamicData.dll
 /home/darling/.nuget/packages/harfbuzzsharp/2.8.2.1-preview.108/lib/net6.0/HarfBuzzSharp.dll
 /home/darling/.nuget/packages/jetbrains.annotations/10.3.0/lib/netstandard1.0/JetBrains.Annotations.dll
 /home/darling/.nuget/packages/microsoft.codeanalysis.csharp/3.4.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll
@@ -40,9 +40,10 @@
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/Microsoft.Win32.Registry.dll
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/mscorlib.dll
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/netstandard.dll
-/home/darling/.nuget/packages/reactiveui/13.2.10/lib/net5.0/ReactiveUI.dll
+/home/darling/.nuget/packages/reactiveui/18.4.34/lib/net6.0/ReactiveUI.dll
+/home/darling/.nuget/packages/reactiveui.fody/18.4.34/lib/net6.0/ReactiveUI.Fody.Helpers.dll
 /home/darling/.nuget/packages/skiasharp/2.88.1-preview.108/lib/net6.0/SkiaSharp.dll
-/home/darling/.nuget/packages/splat/10.0.1/lib/net5.0/Splat.dll
+/home/darling/.nuget/packages/splat/14.6.8/lib/net6.0/Splat.dll
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/System.AppContext.dll
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/System.Buffers.dll
 /usr/lib64/dotnet/packs/Microsoft.NETCore.App.Ref/6.0.15/ref/net6.0/System.Collections.Concurrent.dll

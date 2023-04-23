@@ -131,3 +131,6 @@
 /home/darling/lab3/TCP-FileExplorer/client/Client/Client/obj/Debug/net6.0/Client.pdb
 /home/darling/lab3/TCP-FileExplorer/client/Client/Client/obj/Debug/net6.0/Client.genruntimeconfig.cache
 /home/darling/lab3/TCP-FileExplorer/client/Client/Client/obj/Debug/net6.0/ref/Client.dll
+/home/darling/lab3/TCP-FileExplorer/client/Client/Client/bin/Debug/net6.0/ReactiveUI.Fody.Helpers.dll
+/home/darling/lab3/TCP-FileExplorer/client/Client/Client/obj/Debug/net6.0/Client.csproj.Fody.CopyLocal.cache
+/home/darling/lab3/TCP-FileExplorer/client/Client/Client/obj/Debug/net6.0/Client.csproj.Fody.RuntimeCopyLocal.cache

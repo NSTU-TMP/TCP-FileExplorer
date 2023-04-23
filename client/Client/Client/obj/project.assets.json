@@ -334,20 +334,26 @@
           }
         }
       },
-      "DynamicData/7.1.1": {
+      "DynamicData/7.13.5": {
         "type": "package",
         "dependencies": {
           "System.Reactive": "5.0.0"
         },
         "compile": {
-          "lib/net5.0/DynamicData.dll": {
+          "lib/net6.0/DynamicData.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net5.0/DynamicData.dll": {
+          "lib/net6.0/DynamicData.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Fody/6.6.4": {
+        "type": "package",
+        "build": {
+          "build/Fody.targets": {}
         }
       },
       "HarfBuzzSharp/2.8.2.1-preview.108": {
@@ -772,23 +778,41 @@
           }
         }
       },
-      "ReactiveUI/13.2.10": {
+      "ReactiveUI/18.4.34": {
         "type": "package",
         "dependencies": {
-          "DynamicData": "7.1.1",
-          "Splat": "10.0.1",
-          "System.Reactive": "5.0.0",
-          "System.Runtime.Serialization.Primitives": "4.3.0"
+          "DynamicData": "7.13.5",
+          "Splat": "14.6.8"
         },
         "compile": {
-          "lib/net5.0/ReactiveUI.dll": {
+          "lib/net6.0/ReactiveUI.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net5.0/ReactiveUI.dll": {
+          "lib/net6.0/ReactiveUI.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "ReactiveUI.Fody/18.4.34": {
+        "type": "package",
+        "dependencies": {
+          "Fody": "6.6.4",
+          "ReactiveUI": "18.4.34"
+        },
+        "compile": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/ReactiveUI.Fody.props": {}
         }
       },
       "SkiaSharp/2.88.1-preview.108": {
@@ -889,15 +913,15 @@
           }
         }
       },
-      "Splat/10.0.1": {
+      "Splat/14.6.8": {
         "type": "package",
         "compile": {
-          "lib/net5.0/Splat.dll": {
+          "lib/net6.0/Splat.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net5.0/Splat.dll": {
+          "lib/net6.0/Splat.dll": {
             "related": ".xml"
           }
         }
@@ -1320,21 +1344,6 @@
           "ref/netcoreapp1.1/_._": {}
         }
       },
-      "System.Runtime.Serialization.Primitives/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0"
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {}
-        }
-      },
       "System.Security.Principal.Windows/4.7.0": {
         "type": "package",
         "compile": {
@@ -1749,25 +1758,58 @@
         "lib/netstandard2.0/Avalonia.X11.xml"
       ]
     },
-    "DynamicData/7.1.1": {
-      "sha512": "Pc6J5bFnSxEa64PV2V67FMcLlDdpv6m+zTBKSnRN3aLon/WtWWy8kuDpHFbJlgXHtqc6Nxloj9ItuvDlvKC/8w==",
+    "DynamicData/7.13.5": {
+      "sha512": "jpu26ujgGrMSO68t8b6ClEL3tvZy6K7np8Iem30JkQaLMeOCLxLCZ2Uk/Eyq67k/rwEWrraQ3FB5SBEKJaE2iw==",
       "type": "package",
-      "path": "dynamicdata/7.1.1",
+      "path": "dynamicdata/7.13.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE/LICENSE",
-        "dynamicdata.7.1.1.nupkg.sha512",
+        "dynamicdata.7.13.5.nupkg.sha512",
         "dynamicdata.nuspec",
-        "lib/net461/DynamicData.dll",
-        "lib/net461/DynamicData.xml",
-        "lib/net5.0/DynamicData.dll",
-        "lib/net5.0/DynamicData.xml",
+        "lib/net462/DynamicData.dll",
+        "lib/net462/DynamicData.xml",
+        "lib/net6.0/DynamicData.dll",
+        "lib/net6.0/DynamicData.xml",
+        "lib/net7.0/DynamicData.dll",
+        "lib/net7.0/DynamicData.xml",
         "lib/netstandard2.0/DynamicData.dll",
         "lib/netstandard2.0/DynamicData.xml",
-        "lib/uap10.0.16299/DynamicData.dll",
-        "lib/uap10.0.16299/DynamicData.pri",
-        "lib/uap10.0.16299/DynamicData.xml"
+        "logo.png"
+      ]
+    },
+    "Fody/6.6.4": {
+      "sha512": "vLZS+oa+ndUHYPlx/8n9bBTT3dHkCF0riml4paKq4D663+cZd47x1uagQo32D/gKFZ/sfmV1oqKaLmH0elxq4A==",
+      "type": "package",
+      "path": "fody/6.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "build/Fody.targets",
+        "fody.6.6.4.nupkg.sha512",
+        "fody.nuspec",
+        "netclassictask/Fody.dll",
+        "netclassictask/FodyCommon.dll",
+        "netclassictask/FodyHelpers.dll",
+        "netclassictask/FodyIsolated.dll",
+        "netclassictask/Mono.Cecil.Pdb.dll",
+        "netclassictask/Mono.Cecil.Pdb.pdb",
+        "netclassictask/Mono.Cecil.Rocks.dll",
+        "netclassictask/Mono.Cecil.Rocks.pdb",
+        "netclassictask/Mono.Cecil.dll",
+        "netclassictask/Mono.Cecil.pdb",
+        "netstandardtask/Fody.dll",
+        "netstandardtask/FodyCommon.dll",
+        "netstandardtask/FodyHelpers.dll",
+        "netstandardtask/FodyIsolated.dll",
+        "netstandardtask/Mono.Cecil.Pdb.dll",
+        "netstandardtask/Mono.Cecil.Pdb.pdb",
+        "netstandardtask/Mono.Cecil.Rocks.dll",
+        "netstandardtask/Mono.Cecil.Rocks.pdb",
+        "netstandardtask/Mono.Cecil.dll",
+        "netstandardtask/Mono.Cecil.pdb"
       ]
     },
     "HarfBuzzSharp/2.8.2.1-preview.108": {
@@ -2277,44 +2319,104 @@
         "version.txt"
       ]
     },
-    "ReactiveUI/13.2.10": {
-      "sha512": "fOCbEZ+RsO2Jhv6vB8VX+ZEvczYJaC95atcSG7oXohJeL/sEwbbqvv9k+tbj2l4bRSj2j5CQvhwA3HNLaxlCAg==",
+    "ReactiveUI/18.4.34": {
+      "sha512": "YSHcLi0gbAhbXCsBg2GaZiJR6BiakAzdHuqkxdXHIem5pBCuaPSfdo7SYMq0GKJizBRg9wV0bJe2STqk71byag==",
       "type": "package",
-      "path": "reactiveui/13.2.10",
+      "path": "reactiveui/18.4.34",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE/LICENSE",
-        "lib/monoandroid10.0/ReactiveUI.dll",
-        "lib/monoandroid10.0/ReactiveUI.pdb",
-        "lib/monoandroid10.0/ReactiveUI.xml",
-        "lib/net461/ReactiveUI.dll",
-        "lib/net461/ReactiveUI.xml",
+        "lib/monoandroid12.0/ReactiveUI.dll",
+        "lib/monoandroid12.0/ReactiveUI.pdb",
+        "lib/monoandroid12.0/ReactiveUI.xml",
+        "lib/monoandroid12.1/ReactiveUI.dll",
+        "lib/monoandroid12.1/ReactiveUI.pdb",
+        "lib/monoandroid12.1/ReactiveUI.xml",
+        "lib/monoandroid13.0/ReactiveUI.dll",
+        "lib/monoandroid13.0/ReactiveUI.pdb",
+        "lib/monoandroid13.0/ReactiveUI.xml",
+        "lib/net462/ReactiveUI.dll",
+        "lib/net462/ReactiveUI.xml",
         "lib/net472/ReactiveUI.dll",
         "lib/net472/ReactiveUI.xml",
-        "lib/net5.0-windows10.0.19041/ReactiveUI.dll",
-        "lib/net5.0-windows10.0.19041/ReactiveUI.xml",
-        "lib/net5.0-windows7.0/ReactiveUI.dll",
-        "lib/net5.0-windows7.0/ReactiveUI.xml",
-        "lib/net5.0/ReactiveUI.dll",
-        "lib/net5.0/ReactiveUI.xml",
-        "lib/netcoreapp3.1/ReactiveUI.dll",
-        "lib/netcoreapp3.1/ReactiveUI.xml",
+        "lib/net6.0-android31.0/ReactiveUI.dll",
+        "lib/net6.0-android31.0/ReactiveUI.xml",
+        "lib/net6.0-ios16.1/ReactiveUI.dll",
+        "lib/net6.0-ios16.1/ReactiveUI.xml",
+        "lib/net6.0-maccatalyst16.1/ReactiveUI.dll",
+        "lib/net6.0-maccatalyst16.1/ReactiveUI.xml",
+        "lib/net6.0-macos13.0/ReactiveUI.dll",
+        "lib/net6.0-macos13.0/ReactiveUI.xml",
+        "lib/net6.0-tvos16.1/ReactiveUI.dll",
+        "lib/net6.0-tvos16.1/ReactiveUI.xml",
+        "lib/net6.0/ReactiveUI.dll",
+        "lib/net6.0/ReactiveUI.xml",
+        "lib/net7.0-android33.0/ReactiveUI.dll",
+        "lib/net7.0-android33.0/ReactiveUI.xml",
+        "lib/net7.0-ios16.1/ReactiveUI.dll",
+        "lib/net7.0-ios16.1/ReactiveUI.xml",
+        "lib/net7.0-maccatalyst16.1/ReactiveUI.dll",
+        "lib/net7.0-maccatalyst16.1/ReactiveUI.xml",
+        "lib/net7.0-macos13.0/ReactiveUI.dll",
+        "lib/net7.0-macos13.0/ReactiveUI.xml",
+        "lib/net7.0-tvos16.1/ReactiveUI.dll",
+        "lib/net7.0-tvos16.1/ReactiveUI.xml",
+        "lib/net7.0/ReactiveUI.dll",
+        "lib/net7.0/ReactiveUI.xml",
         "lib/netstandard2.0/ReactiveUI.dll",
         "lib/netstandard2.0/ReactiveUI.xml",
         "lib/tizen40/ReactiveUI.dll",
         "lib/tizen40/ReactiveUI.xml",
-        "lib/uap10.0.16299/ReactiveUI.dll",
-        "lib/uap10.0.16299/ReactiveUI.pri",
-        "lib/uap10.0.16299/ReactiveUI.xml",
         "lib/xamarinios10/ReactiveUI.dll",
         "lib/xamarinios10/ReactiveUI.xml",
         "lib/xamarinmac20/ReactiveUI.dll",
         "lib/xamarinmac20/ReactiveUI.xml",
         "lib/xamarintvos10/ReactiveUI.dll",
         "lib/xamarintvos10/ReactiveUI.xml",
-        "reactiveui.13.2.10.nupkg.sha512",
+        "logo.png",
+        "reactiveui.18.4.34.nupkg.sha512",
         "reactiveui.nuspec"
+      ]
+    },
+    "ReactiveUI.Fody/18.4.34": {
+      "sha512": "Vqi5Mi6rRePnU+SD+DTwTilu/aKSlQpyTK1B4BSWNIWIGJHX7jY3vZcYvOZ+l3+Qr5aaz2gbdlkxTRu+xTgI3A==",
+      "type": "package",
+      "path": "reactiveui.fody/18.4.34",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "build/ReactiveUI.Fody.props",
+        "lib/monoandroid12.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/monoandroid12.0/ReactiveUI.Fody.Helpers.pdb",
+        "lib/monoandroid12.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/monoandroid12.1/ReactiveUI.Fody.Helpers.dll",
+        "lib/monoandroid12.1/ReactiveUI.Fody.Helpers.pdb",
+        "lib/monoandroid12.1/ReactiveUI.Fody.Helpers.xml",
+        "lib/monoandroid13.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/monoandroid13.0/ReactiveUI.Fody.Helpers.pdb",
+        "lib/monoandroid13.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/net462/ReactiveUI.Fody.Helpers.dll",
+        "lib/net462/ReactiveUI.Fody.Helpers.xml",
+        "lib/net472/ReactiveUI.Fody.Helpers.dll",
+        "lib/net472/ReactiveUI.Fody.Helpers.xml",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/net7.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/net7.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.xml",
+        "logo.png",
+        "reactiveui.fody.18.4.34.nupkg.sha512",
+        "reactiveui.fody.nuspec",
+        "weaver/ReactiveUI.Fody.dll"
       ]
     },
     "SkiaSharp/2.88.1-preview.108": {
@@ -2490,21 +2592,21 @@
         "skiasharp.nativeassets.win32.nuspec"
       ]
     },
-    "Splat/10.0.1": {
-      "sha512": "N8BMGVuUBnVLAHSVbna/st8XiLd8ulF3BfkKUSGCPqYpDCis3ELvM+aFaZQLBUIBEcweCYVLq3HFEBqHkCKFyA==",
+    "Splat/14.6.8": {
+      "sha512": "WdhGXUvsWPNPzBLc/LC1Q5jLOczupHDc+4Skl0JaTEuyoDjxxe/Dme8UjGTkCPYbhnVWEsEJprWqyWDY5RNB9A==",
       "type": "package",
-      "path": "splat/10.0.1",
+      "path": "splat/14.6.8",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE/LICENSE",
-        "lib/net461/Splat.dll",
-        "lib/net461/Splat.xml",
-        "lib/net5.0/Splat.dll",
-        "lib/net5.0/Splat.xml",
+        "lib/net6.0/Splat.dll",
+        "lib/net6.0/Splat.xml",
+        "lib/net7.0/Splat.dll",
+        "lib/net7.0/Splat.xml",
         "lib/netstandard2.0/Splat.dll",
         "lib/netstandard2.0/Splat.xml",
-        "splat.10.0.1.nupkg.sha512",
+        "splat.14.6.8.nupkg.sha512",
         "splat.nuspec"
       ]
     },
@@ -4132,79 +4234,6 @@
         "system.runtime.interopservices.nuspec"
       ]
     },
-    "System.Runtime.Serialization.Primitives/4.3.0": {
-      "sha512": "Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
-      "type": "package",
-      "path": "system.runtime.serialization.primitives/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net45/_._",
-        "lib/net46/System.Runtime.Serialization.Primitives.dll",
-        "lib/netcore50/System.Runtime.Serialization.Primitives.dll",
-        "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll",
-        "lib/portable-net45+win8+wp8+wpa81/_._",
-        "lib/win8/_._",
-        "lib/wp80/_._",
-        "lib/wpa81/_._",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net45/_._",
-        "ref/net46/System.Runtime.Serialization.Primitives.dll",
-        "ref/netcore50/System.Runtime.Serialization.Primitives.dll",
-        "ref/netcore50/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/de/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/es/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/fr/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/it/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/ja/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/ko/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/ru/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/zh-hans/System.Runtime.Serialization.Primitives.xml",
-        "ref/netcore50/zh-hant/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/System.Runtime.Serialization.Primitives.dll",
-        "ref/netstandard1.0/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/de/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/es/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/fr/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/it/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/ja/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/ko/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/ru/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/zh-hans/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.0/zh-hant/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/System.Runtime.Serialization.Primitives.dll",
-        "ref/netstandard1.3/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/de/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/es/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/fr/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/it/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/ja/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/ko/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/ru/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/zh-hans/System.Runtime.Serialization.Primitives.xml",
-        "ref/netstandard1.3/zh-hant/System.Runtime.Serialization.Primitives.xml",
-        "ref/portable-net45+win8+wp8+wpa81/_._",
-        "ref/win8/_._",
-        "ref/wp80/_._",
-        "ref/wpa81/_._",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "runtimes/aot/lib/netcore50/System.Runtime.Serialization.Primitives.dll",
-        "system.runtime.serialization.primitives.4.3.0.nupkg.sha512",
-        "system.runtime.serialization.primitives.nuspec"
-      ]
-    },
     "System.Security.Principal.Windows/4.7.0": {
       "sha512": "ojD0PX0XhneCsUbAZVKdb7h/70vyYMDYs85lwEI+LngEONe/17A0cFaRFqZU+sOEidcVswYWikYOQ9PPfjlbtQ==",
       "type": "package",
@@ -4614,6 +4643,7 @@
       "Avalonia.Desktop >= 0.10.18",
       "Avalonia.Diagnostics >= 0.10.18",
       "Avalonia.ReactiveUI >= 0.10.18",
+      "ReactiveUI.Fody >= 18.4.34",
       "XamlNameReferenceGenerator >= 1.3.4"
     ]
   },
@@ -4669,6 +4699,10 @@
           "Avalonia.ReactiveUI": {
             "target": "Package",
             "version": "[0.10.18, )"
+          },
+          "ReactiveUI.Fody": {
+            "target": "Package",
+            "version": "[18.4.34, )"
           },
           "XamlNameReferenceGenerator": {
             "target": "Package",

@@ -12,6 +12,7 @@
           "Avalonia.Desktop": "0.10.18",
           "Avalonia.Diagnostics": "0.10.18",
           "Avalonia.ReactiveUI": "0.10.18",
+          "ReactiveUI.Fody": "18.4.34",
           "XamlNameReferenceGenerator": "1.3.4"
         },
         "runtime": {
@@ -198,7 +199,7 @@
       "Avalonia.ReactiveUI/0.10.18": {
         "dependencies": {
           "Avalonia": "0.10.18",
-          "ReactiveUI": "13.2.10",
+          "ReactiveUI": "18.4.34",
           "System.Reactive": "5.0.0"
         },
         "runtime": {
@@ -260,17 +261,18 @@
           }
         }
       },
-      "DynamicData/7.1.1": {
+      "DynamicData/7.13.5": {
         "dependencies": {
           "System.Reactive": "5.0.0"
         },
         "runtime": {
-          "lib/net5.0/DynamicData.dll": {
-            "assemblyVersion": "7.1.0.0",
-            "fileVersion": "7.1.1.11487"
+          "lib/net6.0/DynamicData.dll": {
+            "assemblyVersion": "7.13.0.0",
+            "fileVersion": "7.13.5.53706"
           }
         }
       },
+      "Fody/6.6.4": {},
       "HarfBuzzSharp/2.8.2.1-preview.108": {
         "dependencies": {
           "HarfBuzzSharp.NativeAssets.Win32": "2.8.2.1-preview.108",
@@ -609,17 +611,27 @@
           }
         }
       },
-      "ReactiveUI/13.2.10": {
+      "ReactiveUI/18.4.34": {
         "dependencies": {
-          "DynamicData": "7.1.1",
-          "Splat": "10.0.1",
-          "System.Reactive": "5.0.0",
-          "System.Runtime.Serialization.Primitives": "4.3.0"
+          "DynamicData": "7.13.5",
+          "Splat": "14.6.8"
         },
         "runtime": {
-          "lib/net5.0/ReactiveUI.dll": {
-            "assemblyVersion": "13.2.0.0",
-            "fileVersion": "13.2.10.47474"
+          "lib/net6.0/ReactiveUI.dll": {
+            "assemblyVersion": "18.4.0.0",
+            "fileVersion": "18.4.34.61121"
+          }
+        }
+      },
+      "ReactiveUI.Fody/18.4.34": {
+        "dependencies": {
+          "Fody": "6.6.4",
+          "ReactiveUI": "18.4.34"
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "assemblyVersion": "18.4.0.0",
+            "fileVersion": "18.4.34.61121"
           }
         }
       },
@@ -691,11 +703,11 @@
           }
         }
       },
-      "Splat/10.0.1": {
+      "Splat/14.6.8": {
         "runtime": {
-          "lib/net5.0/Splat.dll": {
-            "assemblyVersion": "10.0.0.0",
-            "fileVersion": "10.0.1.9728"
+          "lib/net6.0/Splat.dll": {
+            "assemblyVersion": "14.6.0.0",
+            "fileVersion": "14.6.8.29002"
           }
         }
       },
@@ -911,12 +923,6 @@
           "System.Runtime.Handles": "4.3.0"
         }
       },
-      "System.Runtime.Serialization.Primitives/4.3.0": {
-        "dependencies": {
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
       "System.Security.Principal.Windows/4.7.0": {},
       "System.Text.Encoding/4.3.0": {
         "dependencies": {
@@ -1051,12 +1057,19 @@
       "path": "avalonia.x11/0.10.18",
       "hashPath": "avalonia.x11.0.10.18.nupkg.sha512"
     },
-    "DynamicData/7.1.1": {
+    "DynamicData/7.13.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Pc6J5bFnSxEa64PV2V67FMcLlDdpv6m+zTBKSnRN3aLon/WtWWy8kuDpHFbJlgXHtqc6Nxloj9ItuvDlvKC/8w==",
-      "path": "dynamicdata/7.1.1",
-      "hashPath": "dynamicdata.7.1.1.nupkg.sha512"
+      "sha512": "sha512-jpu26ujgGrMSO68t8b6ClEL3tvZy6K7np8Iem30JkQaLMeOCLxLCZ2Uk/Eyq67k/rwEWrraQ3FB5SBEKJaE2iw==",
+      "path": "dynamicdata/7.13.5",
+      "hashPath": "dynamicdata.7.13.5.nupkg.sha512"
+    },
+    "Fody/6.6.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vLZS+oa+ndUHYPlx/8n9bBTT3dHkCF0riml4paKq4D663+cZd47x1uagQo32D/gKFZ/sfmV1oqKaLmH0elxq4A==",
+      "path": "fody/6.6.4",
+      "hashPath": "fody.6.6.4.nupkg.sha512"
     },
     "HarfBuzzSharp/2.8.2.1-preview.108": {
       "type": "package",
@@ -1163,12 +1176,19 @@
       "path": "microsoft.win32.systemevents/4.5.0",
       "hashPath": "microsoft.win32.systemevents.4.5.0.nupkg.sha512"
     },
-    "ReactiveUI/13.2.10": {
+    "ReactiveUI/18.4.34": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fOCbEZ+RsO2Jhv6vB8VX+ZEvczYJaC95atcSG7oXohJeL/sEwbbqvv9k+tbj2l4bRSj2j5CQvhwA3HNLaxlCAg==",
-      "path": "reactiveui/13.2.10",
-      "hashPath": "reactiveui.13.2.10.nupkg.sha512"
+      "sha512": "sha512-YSHcLi0gbAhbXCsBg2GaZiJR6BiakAzdHuqkxdXHIem5pBCuaPSfdo7SYMq0GKJizBRg9wV0bJe2STqk71byag==",
+      "path": "reactiveui/18.4.34",
+      "hashPath": "reactiveui.18.4.34.nupkg.sha512"
+    },
+    "ReactiveUI.Fody/18.4.34": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vqi5Mi6rRePnU+SD+DTwTilu/aKSlQpyTK1B4BSWNIWIGJHX7jY3vZcYvOZ+l3+Qr5aaz2gbdlkxTRu+xTgI3A==",
+      "path": "reactiveui.fody/18.4.34",
+      "hashPath": "reactiveui.fody.18.4.34.nupkg.sha512"
     },
     "SkiaSharp/2.88.1-preview.108": {
       "type": "package",
@@ -1205,12 +1225,12 @@
       "path": "skiasharp.nativeassets.win32/2.88.1-preview.108",
       "hashPath": "skiasharp.nativeassets.win32.2.88.1-preview.108.nupkg.sha512"
     },
-    "Splat/10.0.1": {
+    "Splat/14.6.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-N8BMGVuUBnVLAHSVbna/st8XiLd8ulF3BfkKUSGCPqYpDCis3ELvM+aFaZQLBUIBEcweCYVLq3HFEBqHkCKFyA==",
-      "path": "splat/10.0.1",
-      "hashPath": "splat.10.0.1.nupkg.sha512"
+      "sha512": "sha512-WdhGXUvsWPNPzBLc/LC1Q5jLOczupHDc+4Skl0JaTEuyoDjxxe/Dme8UjGTkCPYbhnVWEsEJprWqyWDY5RNB9A==",
+      "path": "splat/14.6.8",
+      "hashPath": "splat.14.6.8.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",
@@ -1407,13 +1427,6 @@
       "sha512": "sha512-uv1ynXqiMK8mp1GM3jDqPCFN66eJ5w5XNomaK2XD+TuCroNTLFGeZ+WCmBMcBDyTFKou3P6cR6J/QsaqDp7fGQ==",
       "path": "system.runtime.interopservices/4.3.0",
       "hashPath": "system.runtime.interopservices.4.3.0.nupkg.sha512"
-    },
-    "System.Runtime.Serialization.Primitives/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
-      "path": "system.runtime.serialization.primitives/4.3.0",
-      "hashPath": "system.runtime.serialization.primitives.4.3.0.nupkg.sha512"
     },
     "System.Security.Principal.Windows/4.7.0": {
       "type": "package",
