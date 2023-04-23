@@ -17,7 +17,7 @@ public class TcpClient
     private const int Timeout = 2000;
     private const int Interval = 10000;
 
-    public bool isConnected = false;
+    public readonly bool IsConnected = false;
     
     public TcpClient(string ip, int port, string path)
     {
@@ -42,7 +42,7 @@ public class TcpClient
             _timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             _timer.Enabled = true;
 
-            isConnected = true;
+            IsConnected = true;
         }
         catch (Exception e)
         {

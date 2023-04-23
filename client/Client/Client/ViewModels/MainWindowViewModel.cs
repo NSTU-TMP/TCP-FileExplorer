@@ -27,26 +27,26 @@ namespace Client.ViewModels
                 {
                     _client = new TcpClient.TcpClient(ipAddress, port, _path);
 
-                    if (_client.isConnected) messageFromServer = "Подключение установлено успешно.";
+                    if (_client.IsConnected) messageFromServer = "Подключение установлено успешно.";
                     else messageFromServer = "Подключение не удалось";
                 }
                 else messageFromServer = "Неправильно введён ip";
             });
             DisconnectFromServer = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.isConnected) _client.CloseConnection();
+                if (_client != null && _client.IsConnected) _client.CloseConnection();
                 else messageFromServer = "Подключение с сервером ещё не установлено.";
             });
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.isConnected && string.IsNullOrEmpty(_path)) messageFromServer = _client.SendMessageToServer(_path);
+                if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path)) messageFromServer = _client.SendMessageToServer(_path);
                 else if (_client == null)
                     messageFromServer = "Подключение с сервером ещё не установлено.";
                 else messageFromServer = "Не выбран путь.";
             });
             ShutOffServer = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.isConnected) _client.CloseServer();
+                if (_client != null && _client.IsConnected) _client.CloseServer();
                 else messageFromServer = "Подключение с сервером ещё не установлено.";
             });
         }
