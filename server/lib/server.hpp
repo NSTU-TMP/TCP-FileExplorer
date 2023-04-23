@@ -1,4 +1,5 @@
 #pragma once
+
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -10,21 +11,23 @@
 #include <vector>
 
 #include "handler.hpp"
+#include "tcp_listener.hpp"
+#include "ip_addr.hpp"
 
 class server {
- private:
-  struct sockaddr_in address;
-  int server_fd;
+public:
+  server(ip_addr addr, uint16_t port, int max_connections_count = 10);
+
   server() = delete;
-  server(const server&) = delete;
+  server(const server &) = delete;
+
+  void listen_clients();
+
+private:
+  tcp_listener listener;
+
   int max_connections_count;
   std::vector<std::thread> threads;
-  handler client_handler;
-  void check_threads();
 
- public:
-  server(uint16_t port, uint32_t adress = INADDR_ANY,
-         int max_connections_count = 100);
-  ~server();
-  void listen_clients();
+  void check_threads();
 };

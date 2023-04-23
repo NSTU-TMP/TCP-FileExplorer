@@ -8,9 +8,10 @@
 #include <thread>
 #include <vector>
 
-#include "server.hpp"
+#include "../lib/server.hpp"
 
 int main() {
-  // server my_server(1115);
-  // my_server.listen_clients();
+  server s(ip_addr("127.0.0.1"), 4444);
+
+  s.listen_clients();
 }

@@ -1,8 +1,13 @@
 #pragma once
 
+#include "tcp_client.hpp"
+
 class handler {
- private:
- public:
-  handler() {}
-  void operator()(int client_fd);
+public:
+  handler(tcp_client client);
+
+  void handle();
+
+private:
+  tcp_client client;
 };

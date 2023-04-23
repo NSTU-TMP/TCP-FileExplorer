@@ -1,23 +1,25 @@
 #pragma once
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
+
+#include "tcp_client.hpp"
 #include <unistd.h>
+#include "ip_addr.hpp"
 
-#include <cstdint>
-#include <cstring>
-#include <iostream>
-#include <thread>
-#include <vector>
 class tcp_listener {
- private:
-  struct sockaddr_in address;
-  int server_fd;
-  tcp_listener() = delete;
-  tcp_listener(const tcp_listener&) = delete;
+  const uint32_t SOCK_BUFF_SIZE = 3;
 
- public:
-  tcp_listener(int server_fd, struct sockaddr_in address);
-  void accept_client();
-  //   static void asdsa();
+public:
+  tcp_listener(ip_addr ip_addr, uint16_t port);
+
+  tcp_listener(tcp_listener&& other) noexcept;
+  tcp_listener(tcp_listener&) = delete;
+
+  ~tcp_listener();
+
+  tcp_listener& operator=(tcp_listener &&) noexcept;
+  tcp_listener& operator=(tcp_listener const& other) = delete;
+
+  tcp_client accept_client() const;
+
+private:
+  uint32_t fd;
 };
