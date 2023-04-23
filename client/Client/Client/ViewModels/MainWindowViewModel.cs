@@ -14,6 +14,7 @@ namespace Client.ViewModels
         public ReactiveCommand<Unit, Unit> ConnectToServer { get; }
         public ReactiveCommand<Unit, Unit> DisconnectFromServer { get; }
         public ReactiveCommand<Unit, Unit> SendMessageToServer { get; }
+        public ReactiveCommand<Unit, Unit> ShutOffServer { get; }
 
         private TcpClient.TcpClient _client;
 
@@ -37,6 +38,11 @@ namespace Client.ViewModels
                 else if (_client == null)
                     messageFromServer = "Подключение с сервером ещё не установлено.";
                 else messageFromServer = "Не выбран путь.";
+            });
+            ShutOffServer = ReactiveCommand.Create(() =>
+            {
+                if (_client != null && _client.isConnected) _client.CloseServer();
+                else messageFromServer = "Подключение с сервером ещё не установлено.";
             });
         }
     }

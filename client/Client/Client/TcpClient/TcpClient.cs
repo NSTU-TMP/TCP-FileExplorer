@@ -99,4 +99,13 @@ public class TcpClient
         _clientForSendInformation.Close();
         _clientForData.Close();
     }
+
+    public void CloseServer()
+    {
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.SHUT_OFF_SERVER));
+        _streamForSendInformation.Write(data, 0, data.Length);
+        
+        _clientForData.Close();
+        _clientForSendInformation.Close();
+    }
 }
