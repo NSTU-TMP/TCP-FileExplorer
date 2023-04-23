@@ -4,5 +4,5 @@ class handler {
  private:
  public:
   handler() {}
-  void handle_client(int);
+  void operator()(int client_fd);
 };

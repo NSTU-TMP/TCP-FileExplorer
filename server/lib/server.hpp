@@ -9,6 +9,8 @@
 #include <thread>
 #include <vector>
 
+#include "handler.hpp"
+
 class server {
  private:
   struct sockaddr_in address;
@@ -17,6 +19,7 @@ class server {
   server(const server&) = delete;
   int max_connections_count;
   std::vector<std::thread> threads;
+  handler client_handler;
   void check_threads();
 
  public:

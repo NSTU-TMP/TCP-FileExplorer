@@ -1,6 +1,6 @@
 #include "server.hpp"
 
-#include "handler.hpp"
+// #include "handler.hpp"
 
 server::server(uint16_t port, int max_connections_count) {
   this->max_connections_count = max_connections_count;
@@ -52,28 +52,31 @@ void server::listen_clients() {
         continue;
       }
 
-      std::cout << "я в тренде\n";
+      // std::cout << "я в тренде\n";
 
-      // обрабатываем новое соединение в отдельном потоке
-      std::thread t([&]() {
-        char buffer[1024];
-        int bytes_received = recv(client_fd, buffer, sizeof(buffer), 0);
-        if (bytes_received == -1) {
-          std::cerr << "Failed to receive message from client" << std::endl;
-        } else {
-          // выводим сообщение клиента
-          std::cout << "Received message from client: "
-                    << std::string(buffer, bytes_received) << std::endl;
+      std::thread t(this->client_handler, client_fd);
 
-          // отправляем ответ клиенту
-          std::string message = "Hello, client!";
-          if (send(client_fd, message.c_str(), message.size(), 0) == -1) {
-            std::cerr << "Failed to send message to client" << std::endl;
-          }
-        }
-        close(client_fd);
-      });
       threads.push_back(std::move(t));
     }
   }
 }
+
+// обрабатываем новое соединение в отдельном потоке
+// std::thread t([&]() {
+//   char buffer[1024];
+//   int bytes_received = recv(client_fd, buffer, sizeof(buffer), 0);
+//   if (bytes_received == -1) {
+//     std::cerr << "Failed to receive message from client" << std::endl;
+//   } else {
+//     // выводим сообщение клиента
+//     std::cout << "Received message from client: "
+//               << std::string(buffer, bytes_received) << std::endl;
+
+//     // отправляем ответ клиенту
+//     std::string message = "Hello, client!";
+//     if (send(client_fd, message.c_str(), message.size(), 0) == -1) {
+//       std::cerr << "Failed to send message to client" << std::endl;
+//     }
+//   }
+//   close(client_fd);
+// });
