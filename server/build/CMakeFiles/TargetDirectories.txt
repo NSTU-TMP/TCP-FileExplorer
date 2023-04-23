@@ -1,8 +1,0 @@
-/home/xpomin/Prog/TCPserver/build/CMakeFiles/edit_cache.dir
-/home/xpomin/Prog/TCPserver/build/CMakeFiles/rebuild_cache.dir
-/home/xpomin/Prog/TCPserver/build/lib/CMakeFiles/lib.dir
-/home/xpomin/Prog/TCPserver/build/lib/CMakeFiles/edit_cache.dir
-/home/xpomin/Prog/TCPserver/build/lib/CMakeFiles/rebuild_cache.dir
-/home/xpomin/Prog/TCPserver/build/src/CMakeFiles/Executable.out.dir
-/home/xpomin/Prog/TCPserver/build/src/CMakeFiles/edit_cache.dir
-/home/xpomin/Prog/TCPserver/build/src/CMakeFiles/rebuild_cache.dir

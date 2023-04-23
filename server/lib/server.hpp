@@ -23,7 +23,8 @@ class server {
   void check_threads();
 
  public:
-  server(uint16_t port, int max_connections_count = 100);
+  server(uint16_t port, uint32_t adress = INADDR_ANY,
+         int max_connections_count = 100);
   ~server();
   void listen_clients();
 };

@@ -11,6 +11,6 @@
 #include "server.hpp"
 
 int main() {
-  server my_server(1115);
-  my_server.listen_clients();
+  // server my_server(1115);
+  // my_server.listen_clients();
 }

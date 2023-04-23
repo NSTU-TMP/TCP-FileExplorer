@@ -6,4 +6,5 @@ project(ServerLibrary LANGUAGES CXX)
 add_library(lib STATIC 
     server.cpp 
     handler.cpp
+    tcp_listener.cpp
 )
