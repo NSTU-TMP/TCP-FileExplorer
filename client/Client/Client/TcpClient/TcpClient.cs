@@ -7,8 +7,6 @@ namespace Client.TcpClient;
 
 public class TcpClient
 {
-    private readonly string _ipAddress;
-    private readonly int _port;
     private string _path;
     private readonly System.Net.Sockets.TcpClient _clientForSendInformation;
     private readonly System.Net.Sockets.TcpClient _clientForData;
@@ -23,20 +21,19 @@ public class TcpClient
     
     public TcpClient(string ip, int port, string path)
     {
-        _ipAddress = ip;
-        _port = port;
+        var ipAddress = ip;
         _path = path;
         
         try
         {
-            _clientForSendInformation = new System.Net.Sockets.TcpClient(_ipAddress, _port);
+            _clientForSendInformation = new System.Net.Sockets.TcpClient(ipAddress, port);
             _streamForSendInformation = _clientForSendInformation.GetStream();
             
             var data = new byte[1024];
             int bytes = _streamForSendInformation.Read(data, 0, data.Length);
             string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
-            _clientForData = new System.Net.Sockets.TcpClient(_ipAddress, Convert.ToInt16(response));
+            _clientForData = new System.Net.Sockets.TcpClient(ipAddress, Convert.ToInt16(response));
             _streamForData = _clientForData.GetStream();
             
             
@@ -77,7 +74,7 @@ public class TcpClient
     {
         try
         {
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            var data = System.Text.Encoding.UTF8.GetBytes(message);
             _streamForSendInformation.Write(data, 0, data.Length);
 
             data = new byte[1024];
@@ -102,7 +99,7 @@ public class TcpClient
 
     public void CloseServer()
     {
-        byte[] data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.SHUT_OFF_SERVER));
+        var data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.SHUT_OFF_SERVER));
         _streamForSendInformation.Write(data, 0, data.Length);
         
         _clientForData.Close();

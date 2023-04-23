@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using System.Reactive;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -22,10 +23,14 @@ namespace Client.ViewModels
         {
             ConnectToServer = ReactiveCommand.Create(() =>
             {
-                _client = new TcpClient.TcpClient(ipAddress, port, _path);
+                if (IpParse())
+                {
+                    _client = new TcpClient.TcpClient(ipAddress, port, _path);
 
-                if (_client.isConnected) messageFromServer = "Подключение установлено успешно.";
-                else messageFromServer = "Подключение не удалось";
+                    if (_client.isConnected) messageFromServer = "Подключение установлено успешно.";
+                    else messageFromServer = "Подключение не удалось";
+                }
+                else messageFromServer = "Неправильно введён ip";
             });
             DisconnectFromServer = ReactiveCommand.Create(() =>
             {
@@ -44,6 +49,40 @@ namespace Client.ViewModels
                 if (_client != null && _client.isConnected) _client.CloseServer();
                 else messageFromServer = "Подключение с сервером ещё не установлено.";
             });
+        }
+
+        private bool IpParse()
+        {
+            int count = 0;
+            int chunkCount = 0;
+            string buff = "";
+            
+            for (int i = 0; i < ipAddress.Length; i++)
+            {
+                if (ipAddress[i] == '.')
+                {
+                    if (count > 3) return false;
+                    if (Convert.ToInt32(buff) > 255) return false;
+                    count = 0;
+                    buff = "";
+                    chunkCount += 1;
+
+                    if (chunkCount > 4) return false;
+                }
+                else
+                {
+                    count += 1;
+                    buff += ipAddress[i].ToString();
+
+                    if (count > 3) return false;
+                }
+            }
+
+            chunkCount += 1;
+            
+            if (Convert.ToInt32(buff) > 255 || chunkCount > 4) return false;
+            
+            return true;
         }
     }
 }
