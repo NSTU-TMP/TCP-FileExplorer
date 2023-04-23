@@ -11,11 +11,10 @@ public class TcpClient
     private readonly int _port;
     private string _path;
     private readonly System.Net.Sockets.TcpClient _clientForSendInformation;
-    private System.Net.Sockets.TcpClient _clientForData;
+    private readonly System.Net.Sockets.TcpClient _clientForData;
     private readonly NetworkStream _streamForSendInformation;
     private readonly NetworkStream _streamForData;
     private readonly Timer _timer;
-    private MessageType _requestType;
 
     private const int Timeout = 2000;
     private const int Interval = 10000;
