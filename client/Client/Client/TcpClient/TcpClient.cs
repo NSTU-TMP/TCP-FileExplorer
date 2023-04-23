@@ -56,6 +56,10 @@ public class TcpClient
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
         byte[] data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.PING));
+        _streamForSendInformation.Write(data);
+        data = new byte[1024];
+        int bytes = _streamForData.Read(data, 0, data.Length);
+        string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
         var responseTimer = new Timer();
         responseTimer.Interval = Timeout;
@@ -93,5 +97,6 @@ public class TcpClient
     public void CloseConnection()
     {
         _clientForSendInformation.Close();
+        _clientForData.Close();
     }
 }
