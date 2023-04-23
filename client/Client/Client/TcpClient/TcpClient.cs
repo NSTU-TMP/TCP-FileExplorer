@@ -52,11 +52,11 @@ public class TcpClient
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        byte[] data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.PING));
+        var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.PING).ToString());
         _streamForSendInformation.Write(data);
         data = new byte[1024];
-        int bytes = _streamForData.Read(data, 0, data.Length);
-        string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+        var bytes = _streamForData.Read(data, 0, data.Length);
+        var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
         var responseTimer = new Timer();
         responseTimer.Interval = Timeout;
@@ -78,8 +78,8 @@ public class TcpClient
             _streamForSendInformation.Write(data, 0, data.Length);
 
             data = new byte[1024];
-            int bytes = _streamForData.Read(data, 0, data.Length);
-            string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            var bytes = _streamForData.Read(data, 0, data.Length);
+            var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
             
             return response;
         }
@@ -99,7 +99,7 @@ public class TcpClient
 
     public void CloseServer()
     {
-        var data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.SHUT_OFF_SERVER));
+        var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.SHUT_OFF_SERVER).ToString());
         _streamForSendInformation.Write(data, 0, data.Length);
         
         _clientForData.Close();
