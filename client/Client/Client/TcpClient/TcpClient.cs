@@ -10,8 +10,10 @@ public class TcpClient
     private readonly string _ipAddress;
     private readonly int _port;
     private string _path;
-    private System.Net.Sockets.TcpClient _client;
-    private NetworkStream _stream;
+    private System.Net.Sockets.TcpClient _clientForSendInformation;
+    private System.Net.Sockets.TcpClient _clientForData;
+    private NetworkStream _streamForSendInformation;
+    private NetworkStream _streamForData;
     private Timer _timer;
     private MessageType _requestType;
 
@@ -25,12 +27,19 @@ public class TcpClient
         _ipAddress = ip;
         _port = port;
         _path = path;
-
+        
         try
         {
-            _client = new System.Net.Sockets.TcpClient(_ipAddress, _port);
-            _stream = _client.GetStream();
+            _clientForSendInformation = new System.Net.Sockets.TcpClient(_ipAddress, _port);
+            _streamForSendInformation = _clientForSendInformation.GetStream();
+            
+            var data = new byte[1024];
+            int bytes = _streamForSendInformation.Read(data, 0, data.Length);
+            string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
+            _clientForData = new System.Net.Sockets.TcpClient(_ipAddress, Convert.ToInt16(response));
+            _streamForData = _clientForData.GetStream();
+            
             _timer = new Timer();
             _timer.Interval = Interval;
             _timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
@@ -46,33 +55,7 @@ public class TcpClient
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        PingServer();
-    }
-    
-    public string SendMessageToServer(string message)
-    {
-        try
-        {
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
-            _stream.Write(data, 0, data.Length);
-
-            data = new byte[1024];
-            int bytes = _stream.Read(data, 0, data.Length);
-            string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-            
-            return response;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Невъебическая ноунейм ошибка уровня SSS!!!");
-        }
-
-        return "Не получилось получить данные.";
-    }
-
-    private void PingServer()
-    {
-        SendMessageToServer(Convert.ToString(MessageType.PING));
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(Convert.ToString(MessageType.PING));
 
         var responseTimer = new Timer();
         responseTimer.Interval = Timeout;
@@ -86,8 +69,29 @@ public class TcpClient
         responseTimer.Start();
     }
     
+    public string SendMessageToServer(string message)
+    {
+        try
+        {
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            _streamForSendInformation.Write(data, 0, data.Length);
+
+            data = new byte[1024];
+            int bytes = _streamForData.Read(data, 0, data.Length);
+            string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Невъебическая ноунейм ошибка уровня SSS!!!");
+        }
+
+        return "Не получилось получить данные.";
+    }
+
     public void CloseConnection()
     {
-        _client.Close();
+        _clientForSendInformation.Close();
     }
 }
