@@ -1,1 +1,1 @@
-﻿using ReactiveUI;namespace Client.ViewModels{    public class ViewModelBase : ReactiveObject    {    }}
+﻿using ReactiveUI;namespace Client.ViewModels{    public class ViewModelBase : ReactiveObject    {            }}

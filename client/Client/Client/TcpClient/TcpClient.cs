@@ -40,6 +40,7 @@ public class TcpClient
             _clientForData = new System.Net.Sockets.TcpClient(_ipAddress, Convert.ToInt16(response));
             _streamForData = _clientForData.GetStream();
             
+            
             _timer = new Timer();
             _timer.Interval = Interval;
             _timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
