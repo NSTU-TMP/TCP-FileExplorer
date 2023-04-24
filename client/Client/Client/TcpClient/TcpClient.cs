@@ -45,7 +45,7 @@ public class TcpClient
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine("Ошибка ээээээ шо делать????");
         }
     }
 

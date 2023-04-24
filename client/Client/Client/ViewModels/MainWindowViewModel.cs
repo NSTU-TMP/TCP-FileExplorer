@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlTypes;
+using System.Net;
 using System.Reactive;
 using Avalonia.Controls;
 using Client.TcpClient;
@@ -15,7 +16,9 @@ namespace Client.ViewModels
         [Reactive] public int Port { get; set; } = 6720;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
+        [Reactive] public int SelectedIndexComboBox { get; set; }
         public ObservableCollection<string> ListBoxItems { get; set; }
+        public ObservableCollection<string> ComboBoxItems { get; set; }
         private string _path;
         public ReactiveCommand<Unit, Unit> ConnectToServer { get; }
         public ReactiveCommand<Unit, Unit> DisconnectFromServer { get; }
@@ -29,6 +32,10 @@ namespace Client.ViewModels
             var directoryParse = new DirectoryParse();
             
             ListBoxItems = new ObservableCollection<string>();
+            ComboBoxItems = new ObservableCollection<string>();
+            
+            ComboBoxItems.Add("\\C");
+            ComboBoxItems.Add("\\D");
 
             ConnectToServer = ReactiveCommand.Create(() =>
             {
@@ -37,9 +44,9 @@ namespace Client.ViewModels
                     _client = new TcpClient.TcpClient(IpAddress, Port);
 
                     if (_client.IsConnected) MessageFromServer = "Подключение установлено успешно.";
-                    else MessageFromServer = "Подключение не удалось";
+                    else MessageFromServer = "Подключение не удалось...";
                 }
-                else MessageFromServer = "Неправильно введён ip";
+                else MessageFromServer = "Неправильно введён ip.";
             });
             DisconnectFromServer = ReactiveCommand.Create(() =>
             {
@@ -48,7 +55,7 @@ namespace Client.ViewModels
             });
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
-                _path = ListBoxItems[SelectedIndexListBox];
+                //_path = ListBoxItems[SelectedIndexListBox];
 
                 if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path))
                 {
@@ -56,7 +63,7 @@ namespace Client.ViewModels
                     
                     ReplaceItems(buf);
                 }
-                else if (_client == null)
+                else if (_client == null || _client.IsConnected == false)
                     MessageFromServer = "Подключение с сервером ещё не установлено.";
                 else MessageFromServer = "Не выбран путь.";
             });
@@ -69,37 +76,9 @@ namespace Client.ViewModels
 
         private bool IpParse()
         {
-            int count = 0;
-            int chunkCount = 0;
-            var buff = "";
-            
-            for (int i = 0; i < IpAddress.Length; i++)
-            {
-                if (IpAddress[i] == '.')
-                {
-                    if (count > 3) return false;
-                    if (Convert.ToInt32(buff) > 255) return false;
-                    
-                    count = 0;
-                    buff = "";
-                    chunkCount += 1;
+            IPAddress ip;
 
-                    if (chunkCount > 4) return false;
-                }
-                else
-                {
-                    count += 1;
-                    buff += IpAddress[i].ToString();
-
-                    if (count > 3) return false;
-                }
-            }
-
-            chunkCount += 1;
-            
-            if (Convert.ToInt32(buff) > 255 || chunkCount > 4) return false;
-            
-            return true;
+            return IPAddress.TryParse(IpAddress, out ip);
         }
 
         private void ReplaceItems(ObservableCollection<string> buff)
