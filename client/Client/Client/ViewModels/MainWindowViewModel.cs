@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Net;
 using System.Reactive;
 using Avalonia.Controls;
@@ -32,14 +33,23 @@ namespace Client.ViewModels
             var directoryParse = new DirectoryParse();
             
             ListBoxItems = new ObservableCollection<string>();
-            ListBoxItems.Add("1");
-            ListBoxItems.Add("2");
-            ListBoxItems.Add("3");
-            ComboBoxItems = new ObservableCollection<string>();
-            ComboBoxItems.Add("1");
-            ComboBoxItems.Add("2");
-            ComboBoxItems.Add("3");
             
+            ComboBoxItems = new ObservableCollection<string>();
+            
+            // string rootDirectory = "/home/darling/My project";
+            // string[] files = Directory.GetFiles(rootDirectory);
+            // string[] directory = Directory.GetDirectories(rootDirectory);
+            //
+            // foreach (string file in files)
+            // {
+            //     ListBoxItems.Add(file);
+            // }
+            //
+            // foreach (var t in directory)
+            // {
+            //     ListBoxItems.Add(t);
+            // }
+
             ConnectToServer = ReactiveCommand.Create(() =>
             {
                 if (IpParse())
