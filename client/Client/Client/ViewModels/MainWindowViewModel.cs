@@ -32,11 +32,9 @@ namespace Client.ViewModels
             var directoryParse = new DirectoryParse();
             
             ListBoxItems = new ObservableCollection<string>();
+            ListBoxItems.Add("1");
             ComboBoxItems = new ObservableCollection<string>();
             
-            ComboBoxItems.Add("\\C");
-            ComboBoxItems.Add("\\D");
-
             ConnectToServer = ReactiveCommand.Create(() =>
             {
                 if (IpParse())
