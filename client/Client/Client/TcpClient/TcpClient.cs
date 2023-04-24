@@ -19,10 +19,9 @@ public class TcpClient
 
     public readonly bool IsConnected = false;
     
-    public TcpClient(string ip, int port, string path)
+    public TcpClient(string ip, int port)
     {
         var ipAddress = ip;
-        _path = path;
         
         try
         {
