@@ -1,18 +1,19 @@
 #pragma once
 
 #include <arpa/inet.h>
-#include <cstdint>
 #include <netinet/in.h>
-#include <string>
 #include <sys/socket.h>
 
+#include <cstdint>
+#include <string>
+
 struct ip_addr {
-public:
+ public:
   ip_addr(std::string _str) : str(_str) {}
+  ip_addr(ip_addr &other) : str(other.str) {}
 
   in_addr as_in_addr();
 
-private:
+ private:
   std::string str;
-  in_addr addr;
 };

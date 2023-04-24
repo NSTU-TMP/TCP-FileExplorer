@@ -10,7 +10,9 @@ add_library(lib STATIC
   server.cpp
   server.hpp
   tcp_client.hpp
+  tcp_client.cpp
   tcp_listener.cpp
   tcp_listener.hpp
-  message_type.h
+  message_type.cpp
+  message_type.hpp
 )

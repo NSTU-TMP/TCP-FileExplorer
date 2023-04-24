@@ -11,11 +11,11 @@
 #include <vector>
 
 #include "handler.hpp"
-#include "tcp_listener.hpp"
 #include "ip_addr.hpp"
+#include "tcp_listener.hpp"
 
 class server {
-public:
+ public:
   server(ip_addr addr, uint16_t port, int max_connections_count = 10);
 
   server() = delete;
@@ -23,11 +23,12 @@ public:
 
   void listen_clients();
 
-private:
+ private:
   tcp_listener listener;
 
   int max_connections_count;
   std::vector<std::thread> threads;
+  ip_addr ip;
 
   void check_threads();
 };
