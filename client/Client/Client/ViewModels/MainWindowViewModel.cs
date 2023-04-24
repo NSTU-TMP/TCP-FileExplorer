@@ -36,19 +36,19 @@ namespace Client.ViewModels
             
             ComboBoxItems = new ObservableCollection<string>();
             
-            // string rootDirectory = "/home/darling/My project";
-            // string[] files = Directory.GetFiles(rootDirectory);
-            // string[] directory = Directory.GetDirectories(rootDirectory);
-            //
-            // foreach (string file in files)
-            // {
-            //     ListBoxItems.Add(file);
-            // }
-            //
-            // foreach (var t in directory)
-            // {
-            //     ListBoxItems.Add(t);
-            // }
+            string rootDirectory = "/home/darling/My project";
+            string[] files = Directory.GetFiles(rootDirectory);
+            string[] directory = Directory.GetDirectories(rootDirectory);
+            
+            foreach (string file in files)
+            {
+                ListBoxItems.Add(file);
+            }
+            
+            foreach (var t in directory)
+            {
+                ListBoxItems.Add(t);
+            }
 
             ConnectToServer = ReactiveCommand.Create(() =>
             {
@@ -90,7 +90,7 @@ namespace Client.ViewModels
         private bool IpParse()
         {
             IPAddress ip;
-
+            
             return IPAddress.TryParse(IpAddress, out ip);
         }
 
