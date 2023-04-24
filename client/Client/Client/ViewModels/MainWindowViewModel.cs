@@ -33,7 +33,12 @@ namespace Client.ViewModels
             
             ListBoxItems = new ObservableCollection<string>();
             ListBoxItems.Add("1");
+            ListBoxItems.Add("2");
+            ListBoxItems.Add("3");
             ComboBoxItems = new ObservableCollection<string>();
+            ComboBoxItems.Add("1");
+            ComboBoxItems.Add("2");
+            ComboBoxItems.Add("3");
             
             ConnectToServer = ReactiveCommand.Create(() =>
             {

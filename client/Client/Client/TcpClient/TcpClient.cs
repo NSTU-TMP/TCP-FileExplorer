@@ -87,7 +87,7 @@ public class TcpClient
             Console.WriteLine("Невъебическая ноунейм ошибка уровня SSS!!!");
         }
 
-        return "Не получилось получить данные.";
+        return "Не получилось получить данные...";
     }
 
     public void CloseConnection()
