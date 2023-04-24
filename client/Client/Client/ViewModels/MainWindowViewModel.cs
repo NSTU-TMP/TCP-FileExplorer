@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.SqlTypes;
 using System.Reactive;
+using Avalonia.Controls;
+using Client.TcpClient;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -11,16 +14,24 @@ namespace Client.ViewModels
         [Reactive] public string ipAddress { get; set; } = "127.0.0.1";
         [Reactive] public int port { get; set; } = 1024;
         [Reactive] public string messageFromServer { get; set; }
+        [Reactive] public int selectedIndexListBox { get; set; }
+        public ObservableCollection<string> listBoxItems { get; set; }
         private string _path;
         public ReactiveCommand<Unit, Unit> ConnectToServer { get; }
         public ReactiveCommand<Unit, Unit> DisconnectFromServer { get; }
         public ReactiveCommand<Unit, Unit> SendMessageToServer { get; }
         public ReactiveCommand<Unit, Unit> ShutOffServer { get; }
+        private DirectoryParse _directoryParse;
 
         private TcpClient.TcpClient _client;
 
         public MainWindowViewModel()
         {
+            _directoryParse = new DirectoryParse();
+            listBoxItems = new ObservableCollection<string>();
+            listBoxItems.Add("1");
+            listBoxItems.Add("2");
+            listBoxItems.Add("3");
             ConnectToServer = ReactiveCommand.Create(() =>
             {
                 if (IpParse())
@@ -39,7 +50,13 @@ namespace Client.ViewModels
             });
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path)) messageFromServer = _client.SendMessageToServer(_path);
+                _path = listBoxItems[selectedIndexListBox];
+                
+                if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path))
+                {
+                    var buf = _directoryParse.StringParse(_client.SendMessageToServer(_path));
+                    listBoxItems = buf;
+                }
                 else if (_client == null)
                     messageFromServer = "Подключение с сервером ещё не установлено.";
                 else messageFromServer = "Не выбран путь.";
