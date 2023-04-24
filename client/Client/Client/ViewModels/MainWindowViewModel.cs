@@ -12,7 +12,7 @@ namespace Client.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] public int Port { get; set; } = 1024;
+        [Reactive] public int Port { get; set; } = 6720;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         public ObservableCollection<string> ListBoxItems { get; set; }
@@ -29,6 +29,10 @@ namespace Client.ViewModels
         {
             _directoryParse = new DirectoryParse();
             ListBoxItems = new ObservableCollection<string>();
+            ListBoxItems.Add("1");
+            ListBoxItems.Add("2");
+            ListBoxItems.Add("3");
+            ListBoxItems.Add("4");
             
             ConnectToServer = ReactiveCommand.Create(() =>
             {
@@ -49,11 +53,12 @@ namespace Client.ViewModels
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
                 _path = ListBoxItems[SelectedIndexListBox];
-                
+
                 if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path))
                 {
                     var buf = _directoryParse.StringParse(_client.SendMessageToServer(_path));
-                    ListBoxItems = buf;
+                    
+                    ReplaceItems(buf);
                 }
                 else if (_client == null)
                     MessageFromServer = "Подключение с сервером ещё не установлено.";
@@ -99,6 +104,27 @@ namespace Client.ViewModels
             if (Convert.ToInt32(buff) > 255 || chunkCount > 4) return false;
             
             return true;
+        }
+
+        private void ReplaceItems(ObservableCollection<string> buff)
+        {
+            buff.Add("123");
+            buff.Add("1234");
+            buff.Add("12345");
+                    
+            for (int i = 0; i < buff.Count; i++)
+            {
+                if (i < ListBoxItems.Count) ListBoxItems[i] = buff[i];
+                else ListBoxItems.Add(buff[i]);
+            }
+
+            if (buff.Count < ListBoxItems.Count)
+            {
+                for (int i = ListBoxItems.Count - 1; i > buff.Count - 1; i++)
+                {
+                    ListBoxItems.RemoveAt(i);
+                }
+            }
         }
     }
 }
