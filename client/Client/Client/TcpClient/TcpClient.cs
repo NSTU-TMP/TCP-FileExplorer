@@ -18,7 +18,7 @@ public class TcpClient
     private const int Interval = 10000;
 
     public readonly bool IsConnected = false;
-    
+
     public TcpClient(string ip, int port)
     {
         var ipAddress = ip;
@@ -68,7 +68,7 @@ public class TcpClient
         
         responseTimer.Start();
     }
-    
+
     public string SendMessageToServer(string message)
     {
         try

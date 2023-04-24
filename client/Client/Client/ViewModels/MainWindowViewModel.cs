@@ -21,19 +21,15 @@ namespace Client.ViewModels
         public ReactiveCommand<Unit, Unit> DisconnectFromServer { get; }
         public ReactiveCommand<Unit, Unit> SendMessageToServer { get; }
         public ReactiveCommand<Unit, Unit> ShutOffServer { get; }
-        private readonly DirectoryParse _directoryParse;
 
         private TcpClient.TcpClient _client;
 
         public MainWindowViewModel()
         {
-            _directoryParse = new DirectoryParse();
-            ListBoxItems = new ObservableCollection<string>();
-            ListBoxItems.Add("1");
-            ListBoxItems.Add("2");
-            ListBoxItems.Add("3");
-            ListBoxItems.Add("4");
+            var directoryParse = new DirectoryParse();
             
+            ListBoxItems = new ObservableCollection<string>();
+
             ConnectToServer = ReactiveCommand.Create(() =>
             {
                 if (IpParse())
@@ -56,7 +52,7 @@ namespace Client.ViewModels
 
                 if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path))
                 {
-                    var buf = _directoryParse.StringParse(_client.SendMessageToServer(_path));
+                    var buf = directoryParse.StringParse(_client.SendMessageToServer(_path));
                     
                     ReplaceItems(buf);
                 }
@@ -108,10 +104,6 @@ namespace Client.ViewModels
 
         private void ReplaceItems(ObservableCollection<string> buff)
         {
-            buff.Add("123");
-            buff.Add("1234");
-            buff.Add("12345");
-                    
             for (int i = 0; i < buff.Count; i++)
             {
                 if (i < ListBoxItems.Count) ListBoxItems[i] = buff[i];
