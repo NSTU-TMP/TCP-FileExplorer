@@ -13,7 +13,12 @@ class handler {
   void handle(ip_addr server_ip);
 
  private:
-  void send_data(tcp_client &data_sender, std::vector<uint8_t> readed_data);
+
+  void handle_request(std::vector<uint8_t> readed_data);
+
+  void handle_get_data_request(tcp_client &data_sender, std::vector<uint8_t> readed_data);
+  void handle_ping_request();
+
   void parse_dir(tcp_client &data_sender, fs::path path_obj);
   void parse_file(tcp_client &data_sender, fs::path path_obj);
   const size_t BUFFER_SIZE = 1024;
