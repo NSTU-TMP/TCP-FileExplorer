@@ -56,12 +56,16 @@ void fs_task::send_dir(fs::path path) {
     throw std::runtime_error("failed to read directory entries");
   }
 }
+#include <iostream>
 
 void fs_task::try_to_send_dir(fs::path path) {
   auto data_connection = this->check_connection();
 
   for (const auto &entry : fs::directory_iterator(path)) {
-    std::vector<uint8_t> path_as_bytes(this->path.begin(), this->path.end());
+    fs::path dir_path(entry.path());
+    std::string dir_path_str(dir_path.string());
+    std::vector<uint8_t> path_as_bytes(dir_path_str.begin(),
+                                       dir_path_str.end());
     data_connection->send(path_as_bytes);
   }
 

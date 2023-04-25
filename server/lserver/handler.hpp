@@ -5,12 +5,13 @@
 #include <unistd.h>
 
 #include <array>
-#include <boost/optional.hpp>
+// #include <boost/optional.hpp>
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <optional>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -29,11 +30,11 @@ class handler {
 
  private:
   void handle_request(std::vector<uint8_t> readed_data);
-
+  void generate_port();
   info_client client;
   ip_addr server_ip;
   uint16_t port;
   tcp_listener data_connection_listener;
-  boost::optional<fs_task> task;
+  std::optional<fs_task> task;
   boost::shared_ptr<tcp_client> data_client;
 };

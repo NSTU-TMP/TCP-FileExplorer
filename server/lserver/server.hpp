@@ -16,7 +16,7 @@
 
 class server {
  public:
-  server(ip_addr addr, uint16_t port, int max_connections_count = 10);
+  server(ip_addr addr, uint16_t port, size_t max_connections_count = 10);
 
   server() = delete;
   server(const server &) = delete;
@@ -26,7 +26,7 @@ class server {
  private:
   tcp_listener listener;
 
-  int max_connections_count;
+  size_t max_connections_count;
   std::vector<std::thread> threads;
   ip_addr ip;
 

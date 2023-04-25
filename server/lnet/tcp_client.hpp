@@ -23,7 +23,7 @@ class tcp_client {
 
   bool is_closed();
 
-  size_t read_chunk(std::vector<uint8_t> &buf) const;
+  ssize_t read_chunk(std::vector<uint8_t> &buf) const;
 
  private:
   uint32_t fd;

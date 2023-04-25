@@ -30,7 +30,8 @@ bool tcp_listener::is_closed() {
 }
 
 tcp_listener::tcp_listener(ip_addr ip_addr, uint16_t port) {
-  uint32_t socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+  int32_t socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+
   if (socket_fd == -1) {
     throw std::runtime_error("socket creation failed");
   }
@@ -43,10 +44,6 @@ tcp_listener::tcp_listener(ip_addr ip_addr, uint16_t port) {
   if (bind(socket_fd, (sockaddr *)&sock_addr, sizeof(sock_addr)) < 0) {
     close(socket_fd);
     throw std::runtime_error("socket bind failed");
-  }
-
-  if (port == 0) {
-    std::cout << "port was 0 ->" << sock_addr.sin_port << "\n";
   }
 
   if (listen(socket_fd, SOCK_BUFF_SIZE) < 0) {
@@ -75,7 +72,7 @@ tcp_client tcp_listener::accept_client() const {
   sockaddr_in client_addr;
   socklen_t client_addr_len = sizeof(sockaddr_in);
 
-  uint32_t client_fd =
+  int32_t client_fd =
       accept((int)this->fd, (struct sockaddr *)&client_addr, &client_addr_len);
 
   if (client_fd < 0) {

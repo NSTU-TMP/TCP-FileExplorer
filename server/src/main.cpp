@@ -8,10 +8,19 @@
 #include <thread>
 #include <vector>
 
-#include "../lib/server.hpp"
+#include "server.hpp"
 
 int main() {
-  server s(ip_addr("127.0.0.1"), 4455);
-
-  s.listen_clients();
+  uint16_t port = 4460;
+  int flag = 1;
+  while (flag) {
+    try {
+      std::cout << port << "\n";
+      server s(ip_addr("127.0.0.1"), port);
+      s.listen_clients();
+      flag = 0;
+    } catch (std::runtime_error &ex) {
+      port++;
+    }
+  }
 }

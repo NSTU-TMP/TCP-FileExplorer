@@ -21,6 +21,7 @@ class fs_task {
 
   fs_task(fs_task &other) = delete;
   fs_task &operator=(fs_task &other) = delete;
+  fs_task(fs_task &&other) = delete;
 
   void run();
   bool is_finished();
@@ -29,8 +30,6 @@ class fs_task {
   bool is_error_happend();
 
  private:
-  bool error_happend;
-
   const size_t BUFFER_SIZE = 1024;
 
   boost::shared_ptr<tcp_client> check_connection();
@@ -47,4 +46,5 @@ class fs_task {
   boost::weak_ptr<tcp_client> data_client;
   std::string path;
   std::string error_message;
+  bool error_happend;
 };

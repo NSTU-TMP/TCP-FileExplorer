@@ -11,6 +11,7 @@ class info_client {
 
   void send_error(response_type error) const;
   void send_error_message(std::string message) const;
+  void send_port(uint16_t port);
 
-  size_t read_chunk(std::vector<uint8_t> &buf) const;
+  ssize_t read_chunk(std::vector<uint8_t> &buf) const;
 };

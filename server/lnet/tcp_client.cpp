@@ -25,7 +25,8 @@ tcp_client::~tcp_client() {
 }
 
 void tcp_client::send(std::vector<uint8_t> bytes) const {
-  ssize_t writed_bytes_count = write(this->fd, bytes.data(), bytes.size());
+  size_t writed_bytes_count =
+      (size_t)write(this->fd, bytes.data(), bytes.size());
 
   if (writed_bytes_count != bytes.size()) {
     throw std::runtime_error("failed to send all bytes");
@@ -37,19 +38,10 @@ bool tcp_client::is_closed() {
   return false;
 }
 
-size_t tcp_client::read_chunk(std::vector<uint8_t> &buf) const {
+ssize_t tcp_client::read_chunk(std::vector<uint8_t> &buf) const {
   if (this->fd == 0) {
     throw std::runtime_error("method has been called on moved tcp_client");
   }
 
-  ssize_t read_bytes_count = 0;
-
-  read_bytes_count = read(this->fd, buf.data(), 1024);
-  // }
-
-  if (read_bytes_count < 0) {
-    throw std::runtime_error("failed to read bytes");
-  }
-
-  return read_bytes_count;
+  return read(this->fd, buf.data(), buf.size());
 }
