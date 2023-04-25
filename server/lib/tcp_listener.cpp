@@ -1,6 +1,5 @@
 #include "tcp_listener.hpp"
 
-#include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
 

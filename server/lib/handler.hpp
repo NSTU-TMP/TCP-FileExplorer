@@ -4,24 +4,18 @@
 
 #include "ip_addr.hpp"
 #include "tcp_client.hpp"
-namespace fs = std::filesystem;
 
 class handler {
- public:
+public:
   handler(tcp_client client);
 
   void handle(ip_addr server_ip);
 
- private:
-
+private:
   void handle_request(std::vector<uint8_t> readed_data);
 
-  void handle_get_data_request(tcp_client &data_sender, std::vector<uint8_t> readed_data);
   void handle_ping_request();
 
-  void parse_dir(tcp_client &data_sender, fs::path path_obj);
-  void parse_file(tcp_client &data_sender, fs::path path_obj);
-  const size_t BUFFER_SIZE = 1024;
   tcp_client client;
   std::optional<tcp_client> data_sender;
 };

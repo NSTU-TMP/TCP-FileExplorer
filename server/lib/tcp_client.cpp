@@ -1,12 +1,16 @@
 #include "tcp_client.hpp"
+#include <fcntl.h>
 
-tcp_client::tcp_client(uint32_t _fd) : fd(_fd) {}
+tcp_client::tcp_client(uint32_t _fd) : fd(_fd) {
+  int flags = fcntl(this->fd, F_GETFL, 0);
+  fcntl(this->fd, F_SETFL, flags | O_NONBLOCK);
+}
 
-tcp_client::tcp_client(tcp_client&& other) noexcept : fd(other.fd) {
+tcp_client::tcp_client(tcp_client &&other) noexcept : fd(other.fd) {
   other.fd = 0;
 }
 
-tcp_client& tcp_client::operator=(tcp_client&& other) noexcept {
+tcp_client &tcp_client::operator=(tcp_client &&other) noexcept {
   this->fd = other.fd;
   other.fd = 0;
 
@@ -27,7 +31,7 @@ void tcp_client::send(std::vector<uint8_t> bytes) const {
   }
 }
 
-size_t tcp_client::read_chunk(std::vector<uint8_t>& buf) const {
+size_t tcp_client::read_chunk(std::vector<uint8_t> &buf) const {
   if (this->fd == 0) {
     throw std::runtime_error("method has been called on moved tcp_client");
   }
