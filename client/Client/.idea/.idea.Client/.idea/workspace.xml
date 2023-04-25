@@ -8,16 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39af5204-513b-42db-b2c0-8a2da36a24f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/Assets/file.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Assets/avalonia-logo.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Views/MainWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ViewModels/MainWindowViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/bin/Debug/net6.0/Client.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Client/bin/Debug/net6.0/Client.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/bin/Debug/net6.0/Client.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Client/bin/Debug/net6.0/Client.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/Resources.Inputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/Resources.Inputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/original.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/original.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/original.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/original.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Avalonia/resources" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Client.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Client.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Client.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Client/obj/Debug/net6.0/Client.pdb" afterDir="false" />
     </list>
@@ -95,7 +91,8 @@
       <workItem from="1682267325928" duration="751000" />
       <workItem from="1682268125771" duration="150000" />
       <workItem from="1682268286369" duration="4526000" />
-      <workItem from="1682341669971" duration="15236000" />
+      <workItem from="1682341669971" duration="17857000" />
+      <workItem from="1682400338941" duration="1338000" />
     </task>
     <servers />
   </component>
