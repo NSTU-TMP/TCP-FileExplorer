@@ -75,7 +75,7 @@ public class TcpClient
         {
             var data = System.Text.Encoding.UTF8.GetBytes(message);
             _streamForSendInformation.Write(data, 0, data.Length);
-
+            
             data = new byte[1024];
             var bytes = _streamForData.Read(data, 0, data.Length);
             var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
