@@ -9,7 +9,7 @@ request_type request_type_from_byte(uint8_t byte) {
       return GET_DATA;
       break;
     case 3:
-      return GET_PORT;
+      return DATA_RECONNECT;
       break;
 
     default:

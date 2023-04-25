@@ -1,5 +1,4 @@
 #include "ip_addr.hpp"
-#include <netinet/in.h>
 
 in_addr ip_addr::as_in_addr() {
   in_addr addr;

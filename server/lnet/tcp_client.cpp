@@ -1,4 +1,5 @@
 #include "tcp_client.hpp"
+
 #include <fcntl.h>
 
 tcp_client::tcp_client(uint32_t _fd) : fd(_fd) {
@@ -29,6 +30,11 @@ void tcp_client::send(std::vector<uint8_t> bytes) const {
   if (writed_bytes_count != bytes.size()) {
     throw std::runtime_error("failed to send all bytes");
   }
+}
+
+bool tcp_client::is_closed() {
+  throw std::runtime_error("tcp_client: TODO is_closed");
+  return false;
 }
 
 size_t tcp_client::read_chunk(std::vector<uint8_t> &buf) const {

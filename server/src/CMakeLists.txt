@@ -16,13 +16,13 @@ target_link_libraries(Executable.out ${Boost_LIBRARIES})
 target_include_directories(
     Executable.out
     PRIVATE
-    ${SMAKE_CURRENT_SOURCE_DIR}/../lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/../lserver
 )
 
 target_link_directories(
     Executable.out   
     PRIVATE
-    ${SMAKE_CURRENT_SOURCE_DIR}/../lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/../lserver
 )
 
-target_link_libraries(Executable.out lib)
+target_link_libraries(Executable.out lserver)

@@ -20,6 +20,7 @@ class tcp_listener {
   tcp_listener& operator=(tcp_listener const& other) = delete;
 
   uint16_t get_port();
+  bool is_closed();
 
   tcp_client accept_client() const;
 

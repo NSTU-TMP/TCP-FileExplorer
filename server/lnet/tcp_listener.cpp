@@ -24,6 +24,11 @@ tcp_listener::~tcp_listener() {
   }
 }
 
+bool tcp_listener::is_closed() {
+  throw std::runtime_error("tcp_listener: TODO is_closed");
+  return false;
+}
+
 tcp_listener::tcp_listener(ip_addr ip_addr, uint16_t port) {
   uint32_t socket_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (socket_fd == -1) {

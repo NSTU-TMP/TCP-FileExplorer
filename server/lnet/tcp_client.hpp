@@ -21,6 +21,8 @@ class tcp_client {
   ~tcp_client();
   void send(std::vector<uint8_t> bytes) const;
 
+  bool is_closed();
+
   size_t read_chunk(std::vector<uint8_t> &buf) const;
 
  private:
