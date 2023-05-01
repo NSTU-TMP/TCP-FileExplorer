@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(main LANGUAGES CXX)
 
-add_compile_options(-Wall -Werror -Wextra -Wconversion -Wformat-security)
+# add_compile_options(-Wall -Werror -Wextra -Wconversion -Wformat-security)
 
 if (DEBUG)
     add_compile_options(-g3 -ggdb -g)

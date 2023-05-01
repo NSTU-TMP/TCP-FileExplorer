@@ -16,21 +16,27 @@
 #include <utility>
 #include <vector>
 
+#include "../lnet/ip_addr.hpp"
+#include "../lnet/tcp_client.hpp"
+#include "../lnet/tcp_listener.hpp"
 #include "fs_task.hpp"
 #include "info_client.hpp"
-#include "ip_addr.hpp"
 #include "message_type.hpp"
-#include "tcp_client.hpp"
-#include "tcp_listener.hpp"
+
 class handler {
- public:
+public:
   handler(tcp_client client, ip_addr server_ip);
 
   void handle();
 
- private:
+private:
   void handle_request(std::vector<uint8_t> readed_data);
+
+  void handle_data_channel_reconnect();
   void generate_port();
+
+  void handle_get_data(std::vector<uint8_t> readed_data);
+
   info_client client;
   ip_addr server_ip;
   uint16_t port;

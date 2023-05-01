@@ -3,24 +3,29 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "../lnet/ip_addr.hpp"
 #include <cstring>
 #include <iostream>
+#include <string>
 #include <thread>
 #include <vector>
 
-#include "server.hpp"
+#include "../lserver/server.hpp"
 
 int main() {
   uint16_t port = 4460;
-  int flag = 1;
-  while (flag) {
+
+  while (true) {
     try {
       std::cout << port << "\n";
-      server s(ip_addr("127.0.0.1"), port);
+      std::string addr_as_str("127.0.0.1");
+
+      ip_addr addr(addr_as_str);
+
+      server s(addr, port);
       s.listen_clients();
-      flag = 0;
     } catch (std::runtime_error &ex) {
-      port++;
+      port += 1;
     }
   }
 }

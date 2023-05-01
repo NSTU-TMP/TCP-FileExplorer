@@ -9,15 +9,14 @@ typedef enum request_type : uint8_t {
   DATA_RECONNECT = 3,
 } REQUEST_TYPE;
 
-// enum class response_type : uint8_t {
 enum response_type : uint8_t {
   PONG = 1,
   PORT = 2,
   GET_PORT_FAILED = 3,
   SEND_DATA_FAILED = 4,
   INVALID_REQUEST = 5,
-  CHANNEL_IS_BUSY = 6,
-  CHANNEL_WASNT_CREATED = 7,
+  NO_DATA_CHANNEL = 6,
+  DATA_CHANNEL_IS_BUSY = 7,
 };
 
 request_type request_type_from_byte(uint8_t byte);

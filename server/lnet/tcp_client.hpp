@@ -9,7 +9,7 @@
 #include <vector>
 
 class tcp_client {
- public:
+public:
   tcp_client(uint32_t _fd);
 
   tcp_client(tcp_client &&other) noexcept;
@@ -19,12 +19,14 @@ class tcp_client {
   tcp_client &operator=(tcp_client &&other) noexcept;
 
   ~tcp_client();
-  void send(std::vector<uint8_t> bytes) const;
+  void send(std::vector<uint8_t> bytes);
 
   bool is_closed();
 
-  ssize_t read_chunk(std::vector<uint8_t> &buf) const;
+  ssize_t read_chunk(std::vector<uint8_t> &buf, bool blocked = false);
 
- private:
+private:
   uint32_t fd;
 };
+
+size_t sock_send(int fd, std::vector<uint8_t> bytes);

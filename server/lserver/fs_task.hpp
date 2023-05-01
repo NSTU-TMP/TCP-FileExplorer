@@ -12,11 +12,11 @@
 #include <exception>
 #include <stdexcept>
 
+#include "../lnet/tcp_client.hpp"
 #include "message_type.hpp"
-#include "tcp_client.hpp"
 
 class fs_task {
- public:
+public:
   fs_task(boost::weak_ptr<tcp_client> _data_client, std::string _path);
 
   fs_task(fs_task &other) = delete;
@@ -25,14 +25,13 @@ class fs_task {
 
   void run();
   bool is_finished();
-  std::string get_error_message();
+  const std::string get_error_message() const;
 
   bool is_error_happend();
 
- private:
+private:
+  const char DIRS_DELIM = '\n';
   const size_t BUFFER_SIZE = 1024;
-
-  boost::shared_ptr<tcp_client> check_connection();
 
   void send_fs_entry();
 
@@ -44,7 +43,12 @@ class fs_task {
 
   boost::optional<boost::thread> thr;
   boost::weak_ptr<tcp_client> data_client;
+
   std::string path;
   std::string error_message;
-  bool error_happend;
+
+  bool error_happend = false;
+  bool finished = false;
+
+  boost::shared_ptr<tcp_client> check_connection();
 };

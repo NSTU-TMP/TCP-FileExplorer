@@ -10,12 +10,12 @@
 #include <thread>
 #include <vector>
 
+#include "../lnet/ip_addr.hpp"
 #include "handler.hpp"
-#include "ip_addr.hpp"
-#include "tcp_listener.hpp"
+#include "../lnet/tcp_listener.hpp"
 
 class server {
- public:
+public:
   server(ip_addr addr, uint16_t port, size_t max_connections_count = 10);
 
   server() = delete;
@@ -23,7 +23,7 @@ class server {
 
   void listen_clients();
 
- private:
+private:
   tcp_listener listener;
 
   size_t max_connections_count;
