@@ -21,7 +21,7 @@ namespace Client.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] private int Port { get; set; } = 4466;
+        [Reactive] private int Port { get; set; } = 4467;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         [Reactive] public int SelectedIndexComboBox { get; set; }
@@ -82,9 +82,15 @@ namespace Client.ViewModels
 
                 if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
                 {
-                    var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
-                    MessageFromServer = "Успешно";
-                    ReplaceItems(buf);
+                    var str = _client.SendMessageToServer(Path);
+
+                    if (_client.IsFile) MessageFromServer = str;
+                    else
+                    {
+                        var buf = directoryParser.StringParse(str);
+                        MessageFromServer = "Успешно";
+                        ReplaceItems(buf);
+                    }
                 }
                 else if (_client == null || _client.IsConnected == false)
                     MessageFromServer = "Подключение с сервером ещё не установлено.";

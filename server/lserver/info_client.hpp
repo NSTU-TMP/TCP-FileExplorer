@@ -14,6 +14,7 @@ class info_client {
 public:
   info_client(boost::shared_ptr<logger> logger, tcp_client _client);
 
+  void send_ok() const;
   void send_pong(std::vector<uint8_t> &&bytes) const;
   void send_port(uint16_t port) const;
   void send_error() const;

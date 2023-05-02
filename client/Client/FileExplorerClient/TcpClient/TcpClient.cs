@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -21,6 +22,7 @@ public class TcpClient
     private const int Interval = 10000;
 
     public bool IsConnected = false;
+    public bool IsFile = false;
 
     public TcpClient(string ip, int port)
     {
@@ -36,7 +38,7 @@ public class TcpClient
             data = System.Text.Encoding.UTF8.GetBytes("3");
             _streamForSendInformation.Write(data);
 
-            data = new byte[2];
+            data = new byte[3];
             
             int bytes = _streamForSendInformation.Read(data);
             string response = System.Text.Encoding.UTF8.GetString(data);
@@ -59,7 +61,7 @@ public class TcpClient
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        // var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.PING).ToString());
+        // var data = System.Text.Encoding.UTF8.GetBytes("1");
         // _streamForSendInformation.Write(data);
         // data = new byte[1024];
         // var bytes = _streamForData.Read(data, 0, data.Length);
@@ -88,14 +90,20 @@ public class TcpClient
             
             _streamForSendInformation.Write(data, 0, data.Length);
 
+            _streamForSendInformation.Read(data);
+
+            if (data[0] == '2') return "Не получилось обработать данные...";
+
+            data = new byte[1024];
             var dataList = new List<byte>();            
             var buf = new byte[2048];
             var bytes = 0;
-            
+            var count = 0;
+
             while (true)
             {
                 bytes = _streamForData.Read(buf);
-                
+
                 if (bytes >= 2 && buf[bytes - 1] == '\n' && buf[bytes - 2] == '\r')
                 {
                     dataList.AddRange(buf.Take(bytes - 2));
@@ -104,10 +112,16 @@ public class TcpClient
                 
                 dataList.AddRange(buf.Take(bytes));
             }
-            
+
+            if (dataList.Count >= 1)
+            {
+                if (dataList[0] == '1') IsFile = true;
+                else IsFile = false;
+            }
+
             var response = System.Text.Encoding.UTF8.GetString(dataList.ToArray());
             
-            return response;
+            return response[1..response.Length];
         }
         catch (Exception e)
         {
@@ -132,7 +146,7 @@ public class TcpClient
 
     public void CloseServer()
     {
-        var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.SHUT_OFF_SERVER).ToString());
+        var data = System.Text.Encoding.UTF8.GetBytes("4");
         _streamForSendInformation.Write(data, 0, data.Length);
         
         _clientForData.Close();

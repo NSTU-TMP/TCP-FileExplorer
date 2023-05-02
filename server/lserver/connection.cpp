@@ -95,6 +95,7 @@ void connection::handle_get_fs_entry(std::vector<uint8_t> bytes) {
 
   this->lg->info("connection listener", "run new filesystem task");
   this->current_task.value()->run();
+  this->client.send_ok();
 }
 
 std::filesystem::path connection::parse_path(std::vector<uint8_t> bytes) {

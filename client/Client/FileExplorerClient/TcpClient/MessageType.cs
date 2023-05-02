@@ -1,1 +1,1 @@
-namespace Client.TcpClient;public enum MessageType : byte{    PING = 1,    GET_DATA = 2,    DATA_RECONNECT = 3,    SHUT_OFF_SERVER = 4,}
+namespace Client.TcpClient;public enum MessageType : byte{    PING = 1,    GET_DATA = 2,    DATA_RECONNECT = 3,}

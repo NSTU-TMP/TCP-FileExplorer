@@ -12,6 +12,14 @@ std::string bytes_to_string(std::vector<uint8_t> &bytes) {
   return std::string(bytes.begin(), bytes.end());
 }
 
+void info_client::send_ok() const {
+  std::vector<uint8_t> response{
+    info_response_into_byte(info_response_type::OK)};
+
+  this->client.send(response);
+  this->lg->info("info client", "send ok");
+}
+
 void info_client::send_pong(std::vector<uint8_t> &&bytes) const {
   std::vector<uint8_t> response{
       info_response_into_byte(info_response_type::OK)};
