@@ -1,54 +1,51 @@
-#include <string.h>
+#pragma once
 
-#include <boost/cstdint.hpp>
-#include <boost/filesystem/directory.hpp>
-#include <boost/filesystem/exception.hpp>
-#include <boost/filesystem/fstream.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/optional.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr/weak_ptr.hpp>
-#include <boost/thread.hpp>
+#include <cstdint>
 #include <exception>
+#include <filesystem>
+#include <optional>
 #include <stdexcept>
+#include <string>
+#include <thread>
 
 #include "../lnet/tcp_client.hpp"
-#include "message_type.hpp"
+#include "logger.hpp"
+#include "messages_types.hpp"
+#include "task.hpp"
 
-class fs_task {
+class fs_task : public task {
 public:
-  fs_task(boost::weak_ptr<tcp_client> _data_client, std::string _path);
+  fs_task(boost::shared_ptr<logger> _logger, boost::weak_ptr<tcp_client> _conn,
+          std::filesystem::path _path);
 
-  fs_task(fs_task &other) = delete;
-  fs_task &operator=(fs_task &other) = delete;
-  fs_task(fs_task &&other) = delete;
+  void run() override;
 
-  void run();
-  bool is_finished();
-  const std::string get_error_message() const;
+  bool is_finished() const override;
 
-  bool is_error_happend();
+  const boost::optional<const std::string> get_error() const override;
 
 private:
   const char DIRS_DELIM = '\n';
-  const size_t BUFFER_SIZE = 1024;
+  const size_t BUFFER_SIZE = 4096;
 
   void send_fs_entry();
 
-  void send_dir(boost::filesystem::path path);
-  void try_to_send_dir(boost::filesystem::path path);
+  void send_dir();
+  void try_to_send_dir();
 
-  void send_file(boost::filesystem::path path);
-  void try_to_send_file(boost::filesystem::path path);
+  void send_file();
+  void try_to_send_file();
 
-  boost::optional<boost::thread> thr;
-  boost::weak_ptr<tcp_client> data_client;
-
-  std::string path;
-  std::string error_message;
-
-  bool error_happend = false;
   bool finished = false;
+  std::optional<std::thread> thr;
+  std::optional<std::string> error;
+  std::filesystem::path path;
 
-  boost::shared_ptr<tcp_client> check_connection();
+  boost::shared_ptr<logger> lg;
+};
+
+class fs_task_error : public std::runtime_error {
+  using std::runtime_error::runtime_error;
 };

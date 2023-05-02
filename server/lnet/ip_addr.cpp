@@ -6,3 +6,5 @@ in_addr ip_addr::as_in_addr() {
 
   return addr;
 }
+
+std::string ip_addr::as_string() { return std::string(this->str); }
