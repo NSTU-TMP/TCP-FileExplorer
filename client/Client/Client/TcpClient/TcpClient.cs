@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Timers;
+using DynamicData;
 
 namespace Client.TcpClient;
 
@@ -17,7 +20,7 @@ public class TcpClient
     private const int Timeout = 2000;
     private const int Interval = 10000;
 
-    public readonly bool IsConnected = false;
+    public bool IsConnected = false;
 
     public TcpClient(string ip, int port)
     {
@@ -29,69 +32,100 @@ public class TcpClient
             _streamForSendInformation = _clientForSendInformation.GetStream();
             
             var data = new byte[1024];
-            int bytes = _streamForSendInformation.Read(data, 0, data.Length);
-            string response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            
+            data = System.Text.Encoding.UTF8.GetBytes("3");
+            _streamForSendInformation.Write(data);
 
-            _clientForData = new System.Net.Sockets.TcpClient(ipAddress, Convert.ToInt16(response));
+            data = new byte[2];
+            
+            int bytes = _streamForSendInformation.Read(data);
+            string response = System.Text.Encoding.UTF8.GetString(data);
+            
+            _clientForData = new System.Net.Sockets.TcpClient(ipAddress, BitConverter.ToUInt16(data.Reverse().ToArray()));
             _streamForData = _clientForData.GetStream();
-            
-            
+
             _timer = new Timer();
             _timer.Interval = Interval;
             _timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             _timer.Enabled = true;
-
+            
             IsConnected = true;
         }
         catch (Exception e)
         {
-            Console.WriteLine("Ошибка ээээээ шо делать????");
+            Console.WriteLine(e);
         }
     }
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.PING).ToString());
-        _streamForSendInformation.Write(data);
-        data = new byte[1024];
-        var bytes = _streamForData.Read(data, 0, data.Length);
-        var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-
-        var responseTimer = new Timer();
-        responseTimer.Interval = Timeout;
-        responseTimer.Elapsed += (sender, e) => 
-        {
-            CloseConnection();
-            responseTimer.Stop();
-            responseTimer.Dispose();
-        };
-        
-        responseTimer.Start();
+        // var data = System.Text.Encoding.UTF8.GetBytes(((int)MessageType.PING).ToString());
+        // _streamForSendInformation.Write(data);
+        // data = new byte[1024];
+        // var bytes = _streamForData.Read(data, 0, data.Length);
+        // var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+        //
+        // var responseTimer = new Timer();
+        // responseTimer.Interval = Timeout;
+        // responseTimer.Elapsed += (sender, e) => 
+        // {
+        //     CloseConnection();
+        //     responseTimer.Stop();
+        //     responseTimer.Dispose();
+        // };
+        //
+        // Console.WriteLine("All good!");
+        // responseTimer.Start();
     }
 
     public string SendMessageToServer(string message)
     {
         try
         {
-            var data = System.Text.Encoding.UTF8.GetBytes(message);
-            _streamForSendInformation.Write(data, 0, data.Length);
+            var data = new byte[1024];
+
+            data = System.Text.Encoding.UTF8.GetBytes("2" + message);
             
-            data = new byte[1024];
-            var bytes = _streamForData.Read(data, 0, data.Length);
-            var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            _streamForSendInformation.Write(data, 0, data.Length);
+
+            var dataList = new List<byte>();            
+            var buf = new byte[2048];
+            var bytes = 0;
+            
+            while (true)
+            {
+                bytes = _streamForData.Read(buf);
+                
+                if (bytes >= 2 && buf[bytes - 1] == '\n' && buf[bytes - 2] == '\r')
+                {
+                    dataList.AddRange(buf.Take(bytes - 2));
+                    break;
+                }
+                
+                dataList.AddRange(buf.Take(bytes));
+            }
+            
+            var response = System.Text.Encoding.UTF8.GetString(dataList.ToArray());
             
             return response;
         }
         catch (Exception e)
         {
-            Console.WriteLine("Невъебическая ноунейм ошибка уровня SSS!!!");
+            Console.WriteLine(e);
         }
 
-        return "Не получилось получить данные...";
+        return "Не получилось обработать данные...";
+    }
+
+    private void SendFlagToServer(MessageType requestType)
+    {
+        var data = System.Text.Encoding.UTF8.GetBytes("2");
+        _streamForSendInformation.Write(data);
     }
 
     public void CloseConnection()
     {
+        IsConnected = false;
         _clientForSendInformation.Close();
         _clientForData.Close();
     }

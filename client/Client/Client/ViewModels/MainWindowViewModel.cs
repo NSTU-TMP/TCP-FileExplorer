@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlTypes;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reactive;
+using System.Threading;
+using System.Windows.Input;
+using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Client.TcpClient;
+using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -14,79 +21,133 @@ namespace Client.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] public int Port { get; set; } = 6720;
+        [Reactive] private int Port { get; set; } = 4466;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         [Reactive] public int SelectedIndexComboBox { get; set; }
-        public ObservableCollection<string> ListBoxItems { get; set; }
+        public ObservableCollection<string> ListBoxItems { get; } 
         public ObservableCollection<string> ComboBoxItems { get; set; }
-        private string _path;
+        [Reactive] public string Path { get; set; }
         public ReactiveCommand<Unit, Unit> ConnectToServer { get; }
+        public ReactiveCommand<Unit, Unit> JumpUp { get; }
+        public ReactiveCommand<Unit, Unit> DoubleClick { get; }
         public ReactiveCommand<Unit, Unit> DisconnectFromServer { get; }
         public ReactiveCommand<Unit, Unit> SendMessageToServer { get; }
+        public Parse directoryParser = new Parse();
+
         public ReactiveCommand<Unit, Unit> ShutOffServer { get; }
 
         private TcpClient.TcpClient _client;
 
         public MainWindowViewModel()
         {
-            var directoryParse = new DirectoryParse();
+            Console.WriteLine(Thread.CurrentThread.Name);
             
-            ListBoxItems = new ObservableCollection<string>();
-            
+            ListBoxItems = new ObservableCollection<string>(new string[]{});
             ComboBoxItems = new ObservableCollection<string>();
             
-            string rootDirectory = "/home/darling/My project";
-            string[] files = Directory.GetFiles(rootDirectory);
-            string[] directory = Directory.GetDirectories(rootDirectory);
-            
-            foreach (var file in files)
-            {
-                ListBoxItems.Add(file);
-            }
-            
-            foreach (var t in directory)
-            {
-                ListBoxItems.Add(t);
-            }
-
             ConnectToServer = ReactiveCommand.Create(() =>
             {
                 if (IpParse())
                 {
                     _client = new TcpClient.TcpClient(IpAddress, Port);
 
-                    if (_client.IsConnected) MessageFromServer = "Подключение установлено успешно.";
+                    if (_client.IsConnected)
+                    {
+                        MessageFromServer = "Подключение установлено успешно.";
+                        Path = "/";
+                        var s = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                        
+                        ReplaceItems(s);
+                    }
                     else MessageFromServer = "Подключение не удалось...";
                 }
                 else MessageFromServer = "Неправильно введён ip.";
-            });
+            }, outputScheduler: RxApp.MainThreadScheduler);
+            
             DisconnectFromServer = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.IsConnected) _client.CloseConnection();
+                if (_client != null && _client.IsConnected)
+                {
+                    _client.CloseConnection();
+                    ListBoxItems.Clear();
+                    MessageFromServer = "Подключение разорвано.";
+                }
                 else MessageFromServer = "Подключение с сервером ещё не установлено.";
             });
+            
             SendMessageToServer = ReactiveCommand.Create(() =>
             {
-                //_path = ListBoxItems[SelectedIndexListBox];
+                Path = ListBoxItems[SelectedIndexListBox];
 
-                if (_client != null && _client.IsConnected && string.IsNullOrEmpty(_path))
+                if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
                 {
-                    var buf = directoryParse.StringParse(_client.SendMessageToServer(_path));
-                    
+                    var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                    MessageFromServer = "Успешно";
+                    ReplaceItems(buf);
+                }
+                else if (_client == null || _client.IsConnected == false)
+                    MessageFromServer = "Подключение с сервером ещё не установлено.";
+                else MessageFromServer = "Не выбран путь.";
+            }, outputScheduler: RxApp.MainThreadScheduler);
+            
+            ShutOffServer = ReactiveCommand.Create(() =>
+            {
+                if (_client != null && _client.IsConnected) _client.CloseServer();
+                else MessageFromServer = "Подключение с сервером ещё не установлено.";
+            });
+
+            DoubleClick = ReactiveCommand.Create(() =>
+            {
+                Path = ListBoxItems[SelectedIndexListBox];
+
+                if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
+                {
+                    var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                    MessageFromServer = "Успешно.";
                     ReplaceItems(buf);
                 }
                 else if (_client == null || _client.IsConnected == false)
                     MessageFromServer = "Подключение с сервером ещё не установлено.";
                 else MessageFromServer = "Не выбран путь.";
             });
-            ShutOffServer = ReactiveCommand.Create(() =>
+            
+            JumpUp = ReactiveCommand.Create(() =>
             {
-                if (_client != null && _client.IsConnected) _client.CloseServer();
-                else MessageFromServer = "Подключение с сервером ещё не установлено.";
+                if (Path == "/") MessageFromServer = "Нельзя перейти назад. \nВы уже в корневой директории.";
+                else
+                {
+                    Path = directoryParser.CutThePath(Path);
+
+                    if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
+                    {
+                        var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                        MessageFromServer = "Успешно.";
+                        ReplaceItems(buf);
+                    }
+                    else if (_client == null || _client.IsConnected == false)
+                        MessageFromServer = "Подключение с сервером ещё не установлено.";
+                    else MessageFromServer = "Не выбран путь.";
+                }
             });
         }
 
+        public void ListBoxDoubleClick()
+        {
+            Path = ListBoxItems[SelectedIndexListBox];
+
+            if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
+            {
+                var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                    
+                ReplaceItems(buf);
+            }
+            else if (_client == null || _client.IsConnected == false)
+                MessageFromServer = "Подключение с сервером ещё не установлено.";
+            else MessageFromServer = "Не выбран путь.";
+        }
+        
+        
         private bool IpParse()
         {
             IPAddress ip;
@@ -94,20 +155,13 @@ namespace Client.ViewModels
             return IPAddress.TryParse(IpAddress, out ip);
         }
 
-        private void ReplaceItems(ObservableCollection<string> buff)
+        private void ReplaceItems(IReadOnlyList<string> buff)
         {
+            ListBoxItems.Clear();
+            
             for (int i = 0; i < buff.Count; i++)
             {
-                if (i < ListBoxItems.Count) ListBoxItems[i] = buff[i];
-                else ListBoxItems.Add(buff[i]);
-            }
-
-            if (buff.Count < ListBoxItems.Count)
-            {
-                for (int i = ListBoxItems.Count - 1; i > buff.Count - 1; i++)
-                {
-                    ListBoxItems.RemoveAt(i);
-                }
+                ListBoxItems.Add(buff[i]);
             }
         }
     }
