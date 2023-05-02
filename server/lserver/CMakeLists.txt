@@ -9,6 +9,8 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 
 add_library(lserver STATIC 
+  task.cpp
+  task.hpp
   fs_task.cpp
   fs_task.hpp
   handler.cpp

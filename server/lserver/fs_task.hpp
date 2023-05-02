@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string.h>
 
 #include <boost/cstdint.hpp>
@@ -14,20 +16,17 @@
 
 #include "../lnet/tcp_client.hpp"
 #include "message_type.hpp"
+#include "task.hpp"
 
-class fs_task {
+class fs_task : public task {
 public:
-  fs_task(boost::weak_ptr<tcp_client> _data_client, std::string _path);
+  fs_task(boost::weak_ptr<tcp_client> _conn, std::string _path);
 
-  fs_task(fs_task &other) = delete;
-  fs_task &operator=(fs_task &other) = delete;
-  fs_task(fs_task &&other) = delete;
+  void run() override;
 
-  void run();
-  bool is_finished();
-  const std::string get_error_message() const;
+  bool is_finished() const override;
 
-  bool is_error_happend();
+  const boost::optional<const std::string> get_error() const override;
 
 private:
   const char DIRS_DELIM = '\n';
@@ -42,13 +41,8 @@ private:
   void try_to_send_file(boost::filesystem::path path);
 
   boost::optional<boost::thread> thr;
-  boost::weak_ptr<tcp_client> data_client;
-
+  boost::optional<std::string> error;
   std::string path;
-  std::string error_message;
 
-  bool error_happend = false;
   bool finished = false;
-
-  boost::shared_ptr<tcp_client> check_connection();
 };

@@ -25,7 +25,7 @@ tcp_client::~tcp_client() {
   }
 }
 
-void tcp_client::send(std::vector<uint8_t> bytes) {
+void tcp_client::send(std::vector<uint8_t> bytes) const {
   size_t writed_bytes_count = sock_send((int)this->fd, bytes);
 
   if (writed_bytes_count != bytes.size()) {
@@ -55,7 +55,7 @@ bool tcp_client::is_closed() {
   return false;
 }
 
-ssize_t tcp_client::read_chunk(std::vector<uint8_t> &buf, bool blocked) {
+ssize_t tcp_client::read_chunk(std::vector<uint8_t> &buf, bool blocked) const {
   if (this->fd == 0) {
     throw std::runtime_error("method has been called on moved tcp_client");
   }

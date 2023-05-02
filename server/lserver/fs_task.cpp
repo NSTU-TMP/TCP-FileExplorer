@@ -2,8 +2,8 @@
 
 namespace fs = boost::filesystem;
 
-fs_task::fs_task(boost::weak_ptr<tcp_client> _data_client, std::string _path)
-    : data_client(_data_client), path{_path} {}
+fs_task::fs_task(boost::weak_ptr<tcp_client> _conn, std::string _path)
+    : task{_conn}, path{_path} {}
 
 void fs_task::run() {
   if (this->thr.has_value()) {
@@ -14,27 +14,20 @@ void fs_task::run() {
     try {
       this->send_fs_entry();
     } catch (const std::exception &ex) {
-      this->error_happend = true;
-      this->error_message = ex.what();
+      this->error.emplace(ex.what());
     }
     this->finished = true;
   });
 }
 
-bool fs_task::is_finished() { return this->finished; }
+bool fs_task::is_finished() const { return this->finished; }
 
-const std::string fs_task::get_error_message() const {
-  return this->error_message;
-}
-
-bool fs_task::is_error_happend() { return this->error_happend; }
-
-boost::shared_ptr<tcp_client> fs_task::check_connection() {
-  auto data_connection = this->data_client.lock();
-  if (!data_connection) {
-    throw std::runtime_error("data client disconnected");
+const boost::optional<const std::string> fs_task::get_error() const {
+  if (this->error) {
+    return boost::optional<const std::string>(this->error.value());
   }
-  return data_connection;
+
+  return boost::none;
 }
 
 void fs_task::send_fs_entry() {
@@ -48,7 +41,7 @@ void fs_task::send_fs_entry() {
     return;
   }
 
-  throw std::runtime_error("unknown filesystem entry");
+  throw std::runtime_error("unknown fs entry");
 }
 
 void fs_task::send_dir(fs::path path) {
@@ -60,7 +53,11 @@ void fs_task::send_dir(fs::path path) {
 }
 
 void fs_task::try_to_send_dir(fs::path path) {
-  auto data_connection = this->check_connection();
+  auto conn = this->conn.lock();
+
+  if (!conn) {
+    throw std::runtime_error("data client disconnected");
+  }
 
   for (const auto &entry : fs::directory_iterator(path)) {
     fs::path dir_path(entry.path());
@@ -70,10 +67,10 @@ void fs_task::try_to_send_dir(fs::path path) {
                                        dir_path_str.end());
     path_as_bytes.push_back(DIRS_DELIM);
 
-    data_connection->send(path_as_bytes);
+    conn->send(path_as_bytes);
   }
 
-  data_connection->send(END_OF_SENDING_DATA);
+  conn->send(END_OF_SENDING_DATA);
 }
 
 void fs_task::send_file(fs::path path) {
@@ -85,7 +82,11 @@ void fs_task::send_file(fs::path path) {
 }
 
 void fs_task::try_to_send_file(fs::path path) {
-  auto data_connection = this->check_connection();
+  auto conn = this->conn.lock();
+
+  if (!conn) {
+    throw std::runtime_error("data client disconnected");
+  }
 
   fs::ifstream file(path, std::ifstream::binary);
   if (!file.is_open()) {
@@ -99,10 +100,10 @@ void fs_task::try_to_send_file(fs::path path) {
     const size_t readed_bytes_count = file.gcount();
 
     if (readed_bytes_count > 0) {
-      data_connection->send(
+      conn->send(
           std::vector(bytes.begin(), bytes.begin() + readed_bytes_count));
     }
   }
 
-  data_connection->send(END_OF_SENDING_DATA);
+  conn->send(END_OF_SENDING_DATA);
 }

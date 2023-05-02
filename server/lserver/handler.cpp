@@ -1,6 +1,8 @@
 #include "handler.hpp"
 #include "message_type.hpp"
 #include <boost/algorithm/string.hpp>
+#include <boost/smart_ptr/scoped_ptr.hpp>
+#include <boost/thread/detail/move.hpp>
 
 handler::handler(tcp_client _client, ip_addr server_ip)
     : client(std::move(_client)), server_ip(server_ip),
@@ -26,14 +28,7 @@ void handler::handle() {
                          buf.begin() + read_bytes_count);
     }
 
-    if (this->task.has_value() && this->task.value().is_error_happend()) {
-      this->client.send_error_with_message(
-          response_type::SEND_DATA_FAILED,
-          this->task.value().get_error_message());
-      this->task.reset();
-
-      continue;
-    }
+    this->check_task_for_error();
 
     if (readed_data.size() == 0) {
       continue;
@@ -41,6 +36,21 @@ void handler::handle() {
 
     this->handle_request(readed_data);
   }
+}
+
+void handler::check_task_for_error() {
+  if (!this->current_task.has_value()) {
+    return;
+  }
+
+  auto error = this->current_task.value()->get_error();
+  if (!error.has_value()) {
+    return;
+  }
+
+  this->client.send_error_with_message(response_type::SEND_DATA_FAILED,
+                                       error.value());
+  this->current_task.reset();
 }
 
 void handler::handle_request(std::vector<uint8_t> readed_data) {
@@ -69,7 +79,7 @@ void handler::handle_data_channel_reconnect() {
   this->client.send_port(this->port);
   this->data_client = boost::shared_ptr<tcp_client>(
       new tcp_client(this->data_connection_listener.accept_client()));
-  this->task.reset();
+  this->current_task.reset();
 }
 
 void handler::generate_port() {
@@ -78,8 +88,9 @@ void handler::generate_port() {
 }
 
 void handler::handle_get_data(std::vector<uint8_t> readed_data) {
-  if (this->task.has_value() && this->task->is_finished()) {
-    this->task.reset();
+  if (this->current_task.has_value() &&
+      this->current_task.value()->is_finished()) {
+    this->current_task.reset();
   }
 
   if (this->data_client == nullptr) {
@@ -87,7 +98,7 @@ void handler::handle_get_data(std::vector<uint8_t> readed_data) {
     return;
   }
 
-  if (this->task.has_value()) {
+  if (this->current_task.has_value()) {
     this->client.send_error(response_type::DATA_CHANNEL_IS_BUSY);
     return;
   }
@@ -104,6 +115,7 @@ void handler::handle_get_data(std::vector<uint8_t> readed_data) {
 
   path.erase(path.begin(), path.begin() + 1);
 
-  this->task.emplace(boost::weak_ptr<tcp_client>(this->data_client), path);
-  this->task->run();
+  this->current_task.emplace(
+      new fs_task(boost::weak_ptr<tcp_client>(this->data_client), path));
+  this->current_task.value()->run();
 }
