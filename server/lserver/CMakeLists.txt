@@ -13,14 +13,17 @@ add_library(lserver STATIC
   task.hpp
   fs_task.cpp
   fs_task.hpp
-  handler.cpp
-  handler.hpp
-  info_client.cpp
+  connection.hpp
+  connection.cpp
   info_client.hpp
+  info_client.cpp
   server.cpp
   server.hpp
-  message_type.cpp
-  message_type.hpp
+  messages_types.cpp
+  messages_types.hpp
+  logger.hpp
+  console_logger.hpp
+  console_logger.cpp
   )
 
 target_link_libraries(lserver ${Boost_LIBRARIES})

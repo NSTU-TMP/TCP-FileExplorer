@@ -14,6 +14,8 @@ struct ip_addr {
 
   in_addr as_in_addr();
 
+  std::string as_string();
+
  private:
   std::string str;
 };
