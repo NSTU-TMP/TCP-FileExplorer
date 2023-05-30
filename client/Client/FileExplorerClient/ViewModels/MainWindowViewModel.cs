@@ -21,7 +21,7 @@ namespace Client.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] private int Port { get; set; } = 4467;
+        [Reactive] public int Port { get; set; } = 4463;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         [Reactive] public int SelectedIndexComboBox { get; set; }
@@ -56,9 +56,18 @@ namespace Client.ViewModels
                     {
                         MessageFromServer = "Подключение установлено успешно.";
                         Path = "/";
-                        var s = directoryParser.StringParse(_client.SendMessageToServer(Path));
+                        var flag = _client.SendMessageToServer(Path);
                         
-                        ReplaceItems(s);
+                        if (flag == true)
+                        {
+                            var str = _client.str;
+                            var s = directoryParser.StringParse(str);
+                            ReplaceItems(s);
+                        }
+                        else
+                        {
+                            MessageFromServer = "Подключение не удалось...";
+                        }
                     }
                     else MessageFromServer = "Подключение не удалось...";
                 }
@@ -82,14 +91,24 @@ namespace Client.ViewModels
 
                 if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
                 {
-                    var str = _client.SendMessageToServer(Path);
+                    string str;
+                    var flag = _client.SendMessageToServer(Path);
 
-                    if (_client.IsFile) MessageFromServer = str;
+                    if (flag == true)
+                    {
+                        str = _client.str;
+                        
+                        if (_client.IsFile) MessageFromServer = str;
+                        else
+                        {
+                            var buf = directoryParser.StringParse(str);
+                            MessageFromServer = "Успешно";
+                            ReplaceItems(buf);
+                        }
+                    }
                     else
                     {
-                        var buf = directoryParser.StringParse(str);
-                        MessageFromServer = "Успешно";
-                        ReplaceItems(buf);
+                        MessageFromServer = "Не удалось получить данные.";
                     }
                 }
                 else if (_client == null || _client.IsConnected == false)
@@ -103,21 +122,6 @@ namespace Client.ViewModels
                 else MessageFromServer = "Подключение с сервером ещё не установлено.";
             });
 
-            DoubleClick = ReactiveCommand.Create(() =>
-            {
-                Path = ListBoxItems[SelectedIndexListBox];
-
-                if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
-                {
-                    var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
-                    MessageFromServer = "Успешно.";
-                    ReplaceItems(buf);
-                }
-                else if (_client == null || _client.IsConnected == false)
-                    MessageFromServer = "Подключение с сервером ещё не установлено.";
-                else MessageFromServer = "Не выбран путь.";
-            });
-            
             JumpUp = ReactiveCommand.Create(() =>
             {
                 if (Path == "/") MessageFromServer = "Нельзя перейти назад. \nВы уже в корневой директории.";
@@ -127,9 +131,15 @@ namespace Client.ViewModels
 
                     if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
                     {
-                        var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
-                        MessageFromServer = "Успешно.";
-                        ReplaceItems(buf);
+                        var flag = _client.SendMessageToServer(Path);
+
+                        if (flag == true)
+                        {
+                            var str = _client.str;
+                            var buf = directoryParser.StringParse(str);
+                            MessageFromServer = "Успешно.";
+                            ReplaceItems(buf);
+                        }
                     }
                     else if (_client == null || _client.IsConnected == false)
                         MessageFromServer = "Подключение с сервером ещё не установлено.";
@@ -138,22 +148,6 @@ namespace Client.ViewModels
             });
         }
 
-        public void ListBoxDoubleClick()
-        {
-            Path = ListBoxItems[SelectedIndexListBox];
-
-            if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
-            {
-                var buf = directoryParser.StringParse(_client.SendMessageToServer(Path));
-                    
-                ReplaceItems(buf);
-            }
-            else if (_client == null || _client.IsConnected == false)
-                MessageFromServer = "Подключение с сервером ещё не установлено.";
-            else MessageFromServer = "Не выбран путь.";
-        }
-        
-        
         private bool IpParse()
         {
             IPAddress ip;
@@ -165,7 +159,7 @@ namespace Client.ViewModels
         {
             ListBoxItems.Clear();
             
-            for (int i = 0; i < buff.Count; i++)
+            for (int i = 0; i < buff.Count - 1; i++)
             {
                 ListBoxItems.Add(buff[i]);
             }

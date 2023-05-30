@@ -7,22 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39af5204-513b-42db-b2c0-8a2da36a24f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/TcpClient/MessageType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/TcpClient/MessageType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/TcpClient/TcpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/TcpClient/TcpClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/ViewModels/MainWindowViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/ref/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/ref/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/refint/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/refint/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/lserver/connection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/lserver/connection.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/lserver/info_client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/lserver/info_client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/lserver/info_client.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/lserver/info_client.hpp" afterDir="false" />
-    </list>
+    <list default="true" id="39af5204-513b-42db-b2c0-8a2da36a24f9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,7 +93,7 @@
       <workItem from="1682268286369" duration="4526000" />
       <workItem from="1682341669971" duration="17857000" />
       <workItem from="1682400338941" duration="7720000" />
-      <workItem from="1683010343386" duration="29729000" />
+      <workItem from="1683010343386" duration="30546000" />
     </task>
     <servers />
   </component>

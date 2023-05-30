@@ -23,6 +23,7 @@ public class TcpClient
 
     public bool IsConnected = false;
     public bool IsFile = false;
+    public string str;
 
     public TcpClient(string ip, int port)
     {
@@ -52,6 +53,9 @@ public class TcpClient
             _timer.Enabled = true;
             
             IsConnected = true;
+
+            _streamForData.ReadTimeout = 500;
+            _streamForSendInformation.ReadTimeout = 500;
         }
         catch (Exception e)
         {
@@ -80,7 +84,7 @@ public class TcpClient
         // responseTimer.Start();
     }
 
-    public string SendMessageToServer(string message)
+    public bool SendMessageToServer(string message)
     {
         try
         {
@@ -89,10 +93,13 @@ public class TcpClient
             data = System.Text.Encoding.UTF8.GetBytes("2" + message);
             
             _streamForSendInformation.Write(data, 0, data.Length);
-
+            
+            // data = new byte[1024];
+            // _streamForSendInformation.Read(data);
+            data = new byte[1024];
             _streamForSendInformation.Read(data);
 
-            if (data[0] == '2') return "Не получилось обработать данные...";
+            if (data[0] == '2') return false;
 
             data = new byte[1024];
             var dataList = new List<byte>();            
@@ -120,15 +127,16 @@ public class TcpClient
             }
 
             var response = System.Text.Encoding.UTF8.GetString(dataList.ToArray());
-            
-            return response[1..response.Length];
+
+            str = response[1..response.Length];
+            return true;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
 
-        return "Не получилось обработать данные...";
+        return false;
     }
 
     private void SendFlagToServer(MessageType requestType)
