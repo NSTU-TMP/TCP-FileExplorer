@@ -21,7 +21,7 @@ namespace Client.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] public int Port { get; set; } = 4463;
+        [Reactive] public int Port { get; set; } = 4464;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         [Reactive] public int SelectedIndexComboBox { get; set; }
@@ -61,7 +61,7 @@ namespace Client.ViewModels
                         if (flag == true)
                         {
                             var str = _client.str;
-                            var s = directoryParser.StringParse(str);
+                            var s = Parse.StringParse(str);
                             ReplaceItems(s);
                         }
                         else
@@ -101,7 +101,7 @@ namespace Client.ViewModels
                         if (_client.IsFile) MessageFromServer = str;
                         else
                         {
-                            var buf = directoryParser.StringParse(str);
+                            var buf = Parse.StringParse(str);
                             MessageFromServer = "Успешно";
                             ReplaceItems(buf);
                         }
@@ -127,7 +127,7 @@ namespace Client.ViewModels
                 if (Path == "/") MessageFromServer = "Нельзя перейти назад. \nВы уже в корневой директории.";
                 else
                 {
-                    Path = directoryParser.CutThePath(Path);
+                    Path = Parse.CutThePath(Path);
 
                     if (_client != null && _client.IsConnected && !string.IsNullOrEmpty(Path))
                     {
@@ -136,7 +136,7 @@ namespace Client.ViewModels
                         if (flag == true)
                         {
                             var str = _client.str;
-                            var buf = directoryParser.StringParse(str);
+                            var buf = Parse.StringParse(str);
                             MessageFromServer = "Успешно.";
                             ReplaceItems(buf);
                         }

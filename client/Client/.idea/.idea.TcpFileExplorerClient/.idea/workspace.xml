@@ -7,20 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39af5204-513b-42db-b2c0-8a2da36a24f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TcpFileExplorerClient/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TcpFileExplorerClient/.idea/avalonia.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TcpFileExplorerClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TcpFileExplorerClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/TcpClient/TcpClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/TcpClient/TcpClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/ViewModels/MainWindowViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/bin/Debug/net6.0/FileExplorerClient.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/Avalonia/original.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/FileExplorerClient.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/ref/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/ref/FileExplorerClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/refint/FileExplorerClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/obj/Debug/net6.0/refint/FileExplorerClient.dll" afterDir="false" />
+    <list default="true" id="39af5204-513b-42db-b2c0-8a2da36a24f9" name="Changes" comment="fix bugs">
+      <change beforePath="$PROJECT_DIR$/FileExplorerClient/TcpClient/Parse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileExplorerClient/TcpClient/Parse.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,8 +97,16 @@
       <workItem from="1682341669971" duration="17857000" />
       <workItem from="1682400338941" duration="7720000" />
       <workItem from="1683010343386" duration="24687000" />
-      <workItem from="1685443225948" duration="1459000" />
+      <workItem from="1685443225948" duration="1999000" />
     </task>
+    <task id="LOCAL-00001" summary="fix bugs">
+      <created>1685444943647</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1685444943647</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,7 +124,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="origin/master" />
                       </list>
                     </value>
                   </entry>
@@ -142,18 +138,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="fix bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bugs" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/FileExplorerClient/TcpClient/Parse.cs</url>
-          <line>30</line>
-          <properties documentPath="$PROJECT_DIR$/Client/TcpClient/Parse.cs" initialLine="30" containingFunctionPresentation="Method 'CutThePath'" />
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Frame#Client.TcpClient.TcpClient..ctor" memberName="data" />

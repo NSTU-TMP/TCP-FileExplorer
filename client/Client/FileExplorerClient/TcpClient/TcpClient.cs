@@ -65,23 +65,23 @@ public class TcpClient
 
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        // var data = System.Text.Encoding.UTF8.GetBytes("1");
-        // _streamForSendInformation.Write(data);
-        // data = new byte[1024];
-        // var bytes = _streamForData.Read(data, 0, data.Length);
-        // var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-        //
-        // var responseTimer = new Timer();
-        // responseTimer.Interval = Timeout;
-        // responseTimer.Elapsed += (sender, e) => 
-        // {
-        //     CloseConnection();
-        //     responseTimer.Stop();
-        //     responseTimer.Dispose();
-        // };
-        //
-        // Console.WriteLine("All good!");
-        // responseTimer.Start();
+        var data = System.Text.Encoding.UTF8.GetBytes("1");
+        _streamForSendInformation.Write(data);
+        data = new byte[1024];
+        var bytes = _streamForData.Read(data, 0, data.Length);
+        var response = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+        
+        var responseTimer = new Timer();
+        responseTimer.Interval = Timeout;
+        responseTimer.Elapsed += (sender, e) => 
+        {
+            CloseConnection();
+            responseTimer.Stop();
+            responseTimer.Dispose();
+        };
+        
+        Console.WriteLine("All good!");
+        responseTimer.Start();
     }
 
     public bool SendMessageToServer(string message)
