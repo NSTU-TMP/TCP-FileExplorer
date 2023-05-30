@@ -33,7 +33,8 @@ public class TcpClient
         {
             _clientForSendInformation = new System.Net.Sockets.TcpClient(ipAddress, port);
             _streamForSendInformation = _clientForSendInformation.GetStream();
-            
+            _streamForSendInformation.ReadTimeout = 500;
+
             var data = new byte[1024];
             
             data = System.Text.Encoding.UTF8.GetBytes("3");
@@ -55,7 +56,6 @@ public class TcpClient
             IsConnected = true;
 
             _streamForData.ReadTimeout = 500;
-            _streamForSendInformation.ReadTimeout = 500;
         }
         catch (Exception e)
         {

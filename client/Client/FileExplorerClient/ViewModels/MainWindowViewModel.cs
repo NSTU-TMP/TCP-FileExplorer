@@ -20,8 +20,9 @@ namespace Client.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        [Reactive] public bool isConect { get; set; } = false;
         [Reactive] public string IpAddress { get; set; } = "127.0.0.1";
-        [Reactive] public int Port { get; set; } = 4464;
+        [Reactive] public int Port { get; set; } = 4465;
         [Reactive] public string MessageFromServer { get; set; }
         [Reactive] public int SelectedIndexListBox { get; set; }
         [Reactive] public int SelectedIndexComboBox { get; set; }
@@ -54,6 +55,7 @@ namespace Client.ViewModels
 
                     if (_client.IsConnected)
                     {
+                        isConect = _client.IsConnected;
                         MessageFromServer = "Подключение установлено успешно.";
                         Path = "/";
                         var flag = _client.SendMessageToServer(Path);
@@ -79,6 +81,7 @@ namespace Client.ViewModels
                 if (_client != null && _client.IsConnected)
                 {
                     _client.CloseConnection();
+                    isConect = _client.IsConnected;
                     ListBoxItems.Clear();
                     MessageFromServer = "Подключение разорвано.";
                 }
